@@ -19,9 +19,8 @@ public class MtdWaterLeakExamGroup {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long examGroupIdx;
 	
-	@OneToMany(mappedBy = "examGroupIdx")
-	private List<MtdWaterLeakExamWateruser> leakWaterUsers
-			= new ArrayList<MtdWaterLeakExamWateruser>();
+	@OneToMany(mappedBy = "examGroup")
+	private List<MtdWaterLeakExamWateruser> leakWaterUsers = new ArrayList<MtdWaterLeakExamWateruser>();
 
 	@Column(name = "EXAM_NM", length = 200)
 	private String examNm;

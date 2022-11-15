@@ -1,15 +1,10 @@
 package com.waterleak.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.waterleak.WaterLeak;
 import com.waterleak.config.Globals;
 import com.waterleak.dao.reporting.AckNbiotRepository;
 import com.waterleak.dto.AckNbiotDto;
 import com.waterleak.model.reporting.AckNbiot;
-import java.util.Calendar;
-import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +14,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = WaterLeak.class)
 @EnableTransactionManagement
 @ActiveProfiles("dev")
 public class ReportingServiceTest {
-
-  @Autowired
-  private ReportingService reportingService;
-  @Autowired
-  private AckNbiotRepository ackNbiotRepository;
+  @Autowired private ReportingService reportingService;
+  @Autowired private AckNbiotRepository ackNbiotRepository;
 
   @Test
   @Transactional(Globals.REPORTING_TRANSACTION_MANAGER)
@@ -40,6 +38,7 @@ public class ReportingServiceTest {
         .build();
 
     AckNbiot savedAckNbiot = ackNbiotRepository.save(instruct);
+    ackNbiotRepository.flush();
     final Optional<AckNbiot> result = ackNbiotRepository.findById(savedAckNbiot.getImei());
     assertTrue(result.isPresent());
 

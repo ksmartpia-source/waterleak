@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 public class WaterLeakSchedule {
   @Scheduled(cron = "* * * * * *")
   public void test(){
-    System.out.println("##########");
+    System.out.println("Scheduled");
   }
 }
