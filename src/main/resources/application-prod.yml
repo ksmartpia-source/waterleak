@@ -1,0 +1,25 @@
+server:
+  port: 7001
+
+hibernate:
+  hbm2ddl:
+    auto: update
+  cache:
+    use_query_cache: false
+    use_second_level_cache: false
+
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        id:
+          new_generator_mappings: false
+  datasource: # wapi
+    jdbcUrl:
+    username: root
+    password:
+  second-datasource: # reporting
+    jdbcUrl:
+    username: root
+    password:

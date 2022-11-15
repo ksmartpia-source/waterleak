@@ -1,0 +1,25 @@
+server:
+  port: 7001
+
+hibernate:
+  hbm2ddl:
+    auto: create-drop
+  cache:
+    use_query_cache: false
+    use_second_level_cache: false
+
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        id:
+          new_generator_mappings: false
+  datasource: # wapi
+    jdbcUrl: jdbc:h2:mem:kspia_wapi_op;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS kspia_wapi_op
+    username: sa
+    password: sa
+  second-datasource: # reporting
+    jdbcUrl: jdbc:h2:mem:reporting;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS reporting
+    username: sa
+    password: sa
