@@ -2,10 +2,12 @@ package com.waterleak.service;
 
 import com.waterleak.WaterLeak;
 import com.waterleak.dao.reporting.AckNbiotRepository;
+import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import com.waterleak.dto.AckNbiotDto;
 import com.waterleak.model.reporting.AckNbiot;
+import com.waterleak.model.reporting.MeterDataSeoulNbiot;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Optional;
 
 import static com.waterleak.config.Globals.REPORTING_TRANSACTION_MANAGER;
@@ -32,6 +35,7 @@ public class WaterLeakProcessServiceTest {
     @Autowired private MtdWaterLeakExamGroupRepository groupRepository;
     @Autowired private MtdWaterLeakExamWateruserRepository wateruserRepository;
     @Autowired private AckNbiotRepository ackNbiotRepository;
+    @Autowired private MeterDataSeoulNbiotRepository seoulNbiotRepository;
     @Autowired private WaterLeakProcessService leakProcessService;
 
     @Before
@@ -51,6 +55,13 @@ public class WaterLeakProcessServiceTest {
         AckNbiotDto ackNbiotBy = leakProcessService.getAckNbiotBy(instruct.getImei());
         assertEquals(savedAckNbiot.getImei(), ackNbiotBy.getImei());
         assertEquals(savedAckNbiot.getNbInstruction(), ackNbiotBy.getNbInstruction());
+    }
+
+    @Test
+    @Transactional(REPORTING_TRANSACTION_MANAGER)
+    public void MeterDataSeoulNbiot_조회() {
+        List<MeterDataSeoulNbiot> result = seoulNbiotRepository.findAll();
+        assertEquals(result.size(), 20);
     }
 
     @Test

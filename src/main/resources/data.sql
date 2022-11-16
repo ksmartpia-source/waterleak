@@ -18,34 +18,34 @@ INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('
 
 create table meterdataseoulnbiot
 (
-    imei varchar(50) not null comment '이동통신ID IMEI',
-    imsi varchar(50) not null comment '이동통신ID IMSI',
-    metering_date datetime not null comment '미터링시각',
-    receiving_date datetime not null comment '수신시각',
-    rssi int default 0 not null comment '무선품질 RSSI',
-    ber int default 0 not null comment '무선품질 BER',
-    cid int default 0 not null comment '무선품질 CID',
-    rsrp int default 0 not null comment '무선품질 RSRP',
-    rsrq int default 0 not null comment '무선품질 RSRQ',
-    snr int default 0 not null comment '무선품질 SNR',
-    modem_serial varchar(50) null comment '단말기_일련번호',
-    modem_fwversion varchar(50) null comment '단말기_F/W 버전',
-    modem_battery decimal(10,3) null comment '단말기_배터리 전압',
-    meter_serial varchar(50) null comment '계량기 기물번호',
-    meter_type varchar(50) null comment '계량기 형식',
-    meter_size varchar(50) null comment '계량기 구경',
-    meter_status_overload int default 0 not null comment '과부하검출여부 TRUE:1, FALSE:0',
-    meter_status_leaked int default 0 not null comment '옥내누수여부 TRUE:1, FALSE:0',
-    meter_status_reversed int default 0 not null comment '역류여부 TRUE:1, FALSE:0',
-    meter_status_battery int default 0 not null comment '배터리 1:저전압, 0:정상',
-    metering_interval int default 0 not null comment '검침주기',
-    reporting_interval int default 0 not null comment '보고주기',
-    metering_value decimal(10,3) default -99.000 not null comment '수신지침',
-    modem_temp decimal(10,3) default -99.000 not null comment '모뎀온도',
+    imei varchar(50) not null,
+    imsi varchar(50) not null,
+    metering_date datetime not null,
+    receiving_date datetime not null,
+    rssi int default 0 not null ,
+    ber int default 0 not null ,
+    cid int default 0 not null,
+    rsrp int default 0 not null,
+    rsrq int default 0 not null,
+    snr int default 0 not null ,
+    modem_serial varchar(50) null,
+    modem_fwversion varchar(50) null,
+    modem_battery decimal(10,3) null,
+    meter_serial varchar(50) null ,
+    meter_type varchar(50) null ,
+    meter_size varchar(50) null ,
+    meter_status_overload int default 0 not null ,
+    meter_status_leaked int default 0 not null ,
+    meter_status_reversed int default 0 not null,
+    meter_status_battery int default 0 not null,
+    metering_interval int default 0 not null ,
+    reporting_interval int default 0 not null ,
+    metering_value decimal(10,3) default -99.000 not null,
+    modem_temp decimal(10,3) default -99.000 not null,
     insert_date datetime default CURRENT_TIMESTAMP not null,
     update_date datetime null,
     primary key (imei, metering_date)
-) comment '서울미터데이터NBIOT';
+);
 create index meterdataseoulnbiot_imei_IDX on meterdataseoulnbiot (imei);
 create index meterdataseoulnbiot_metering_date_IDX on meterdataseoulnbiot (metering_date);
 create index meterdataseoulnbiot_receiving_date_IDX on meterdataseoulnbiot (receiving_date);
@@ -70,74 +70,3 @@ INSERT INTO meterdataseoulnbiot (imei, imsi, metering_date, receiving_date, rssi
 INSERT INTO meterdataseoulnbiot (imei, imsi, metering_date, receiving_date, rssi, ber, cid, rsrp, rsrq, snr, modem_serial, modem_fwversion, modem_battery, meter_serial, meter_type, meter_size, meter_status_overload, meter_status_leaked, meter_status_reversed, meter_status_battery, metering_interval, reporting_interval, metering_value, modem_temp, insert_date, update_date) VALUES ('864700043274430', '450061235948870', '2022-11-16 15:58:03', '2022-11-16 15:58:29', -71, 0, 12317, -770, -100, -300, 'FFFFFFFFFF', '1.4', 3.500, '21510059', '01', '20', 0, 1, 0, 0, 1, 6, 418.353, 14.200, '2022-11-16 15:58:29', '2022-11-16 15:58:31');
 INSERT INTO meterdataseoulnbiot (imei, imsi, metering_date, receiving_date, rssi, ber, cid, rsrp, rsrq, snr, modem_serial, modem_fwversion, modem_battery, meter_serial, meter_type, meter_size, meter_status_overload, meter_status_leaked, meter_status_reversed, meter_status_battery, metering_interval, reporting_interval, metering_value, modem_temp, insert_date, update_date) VALUES ('864447053909600', '450061236142161', '2022-11-16 15:58:03', '2022-11-16 15:58:22', -65, 0, 12316, -720, -100, -110, '2112001592', '2.3', 3.600, '21524003', '01', '25', 0, 0, 0, 0, 1, 6, 537.589, 12.000, '2022-11-16 15:58:22', '2022-11-16 15:58:25');
 INSERT INTO meterdataseoulnbiot (imei, imsi, metering_date, receiving_date, rssi, ber, cid, rsrp, rsrq, snr, modem_serial, modem_fwversion, modem_battery, meter_serial, meter_type, meter_size, meter_status_overload, meter_status_leaked, meter_status_reversed, meter_status_battery, metering_interval, reporting_interval, metering_value, modem_temp, insert_date, update_date) VALUES ('864447051066247', '450061236859678', '2022-11-16 15:58:03', '2022-11-16 15:58:22', -81, 0, 11044, -870, -100, -290, '2207008328', '2.3', 3.600, '21513177', '01', '20', 0, 0, 0, 0, 1, 6, 115.615, 12.600, '2022-11-16 15:58:22', '2022-11-16 15:58:26');
-
-
-
-/* ############################################################################################################################################################ */
-/* ############################################################################################################################################################ */
-/* ############################################################################################################################################################ */
-/* ############################################################################################################################################################ */
-/* ############################################################################################################################################################ */
-
-/*
-#############
-#### WAPI ###
-#############
-*/
-create table mtd_nb_water_leak_exam_group
-(
-    exam_group_idx     bigint       not null primary key,
-    created_date       datetime     null,
-    created_user       varchar(20)  null,
-    exam_finished_dt   datetime     null,
-    exam_nm            varchar(200) null,
-    exam_plan_start_dt datetime     null,
-    exam_started_dt    datetime     null,
-    exam_status        varchar(10)  null,
-    group_sid          bigint       null
-);
-INSERT INTO mtd_nb_water_leak_exam_group (exam_group_idx, created_date, created_user, exam_finished_dt, exam_nm, exam_plan_start_dt, exam_started_dt, exam_status, group_sid) VALUES (1, '2022-11-16 14:02:33', '관리자', '2022-11-16 14:02:44', '등록', '2022-11-16 14:02:44', '2022-11-16 14:02:44', 'F', 6);
-
-
-create table mtd_nb_water_leak_exam_wateruser
-(
-    exam_wateruser_idx bigint not null
-        primary key,
-    consumer_sid bigint null,
-    exam_result varchar(5) null,
-    imei varchar(50) null,
-    leak_min_usage decimal(10,3) null,
-    exam_group_idx bigint null,
-    constraint UK_9b3fs5xe8aw5d01ui8ks8k0f3 unique (imei),
-    constraint UK_agxmpte0ncic5u5rl134r9qbc unique (consumer_sid),
-    constraint FK9w5vrl0a7tmfeyajm176y563r foreign key (exam_group_idx) references mtd_nb_water_leak_exam_group (exam_group_idx)
-);
-
-
-create table mtd_nb_meterinfo_leak
-(
-    id bigint not null
-        primary key,
-    acube_signal01 int null,
-    acube_signal02 int null,
-    criterion_date datetime null,
-    group_sid bigint null,
-    info_tag varchar(25) null,
-    metering_date datetime null,
-    metering_signal01 int null,
-    metering_signal02 int null,
-    metering_signal03 int null,
-    metering_signal04 int null,
-    metering_state varchar(50) null,
-    metering_usage decimal(10,3) null,
-    metering_value decimal(10,3) null,
-    modem_id varchar(50) null,
-    modem_rssi int null,
-    modem_signal01 int null,
-    modem_signal02 int null,
-    modem_signal03 int null,
-    receiving_date datetime null,
-    exam_wateruser_idx bigint null,
-    constraint FK7k2x56vl5jcx2ug72a0dgpi9w
-        foreign key (exam_wateruser_idx) references mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx)
-);
