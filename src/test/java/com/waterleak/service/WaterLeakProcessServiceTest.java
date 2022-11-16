@@ -8,7 +8,6 @@ import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import com.waterleak.dto.AckNbiotDto;
 import com.waterleak.model.reporting.AckNbiot;
 import com.waterleak.model.reporting.MeterDataSeoulNbiot;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +36,6 @@ public class WaterLeakProcessServiceTest {
     @Autowired private AckNbiotRepository ackNbiotRepository;
     @Autowired private MeterDataSeoulNbiotRepository seoulNbiotRepository;
     @Autowired private WaterLeakProcessService leakProcessService;
-
-    @Before
-    public void before(){ }
 
     @Test
     @Transactional(REPORTING_TRANSACTION_MANAGER)
