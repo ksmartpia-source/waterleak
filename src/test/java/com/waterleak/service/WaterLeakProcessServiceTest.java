@@ -35,24 +35,22 @@ public class WaterLeakProcessServiceTest {
     @Autowired private WaterLeakProcessService leakProcessService;
 
     @Before
-    public void before(){
-    }
+    public void before(){ }
 
     @Test
     @Transactional(REPORTING_TRANSACTION_MANAGER)
     public void AckNbiot_단건_조회() {
         AckNbiot instruct = AckNbiot.builder()
-                .imei("123456789012345")
-                .nbInstruction("instruct")
+                .imei("890123456719876")
+                .nbInstruction("QSDF")
                 .insertDate(Calendar.getInstance())
                 .build();
-
         AckNbiot savedAckNbiot = ackNbiotRepository.save(instruct);
-        ackNbiotRepository.flush();
         final Optional<AckNbiot> result = ackNbiotRepository.findById(savedAckNbiot.getImei());
         assertTrue(result.isPresent());
         AckNbiotDto ackNbiotBy = leakProcessService.getAckNbiotBy(instruct.getImei());
         assertEquals(savedAckNbiot.getImei(), ackNbiotBy.getImei());
+        assertEquals(savedAckNbiot.getNbInstruction(), ackNbiotBy.getNbInstruction());
     }
 
     @Test

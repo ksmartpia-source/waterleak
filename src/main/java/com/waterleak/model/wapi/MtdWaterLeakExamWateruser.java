@@ -1,6 +1,6 @@
 package com.waterleak.model.wapi;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "MTD_NB_WATER_LEAK_EXAM_WATERUSER")
-@Data
+@Getter
 @NoArgsConstructor
 public class MtdWaterLeakExamWateruser {
     @Id

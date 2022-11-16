@@ -1,6 +1,6 @@
 package com.waterleak.model.wapi;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "MTD_NB_WATER_LEAK_EXAM_GROUP")
-@Data
+@Getter
 @NoArgsConstructor
 public class MtdWaterLeakExamGroup {
 	@Id

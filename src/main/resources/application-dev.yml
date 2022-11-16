@@ -3,7 +3,7 @@ server:
 
 hibernate:
   hbm2ddl:
-    auto: create-drop
+    auto: update
   cache:
     use_query_cache: false
     use_second_level_cache: false
@@ -16,10 +16,10 @@ spring:
         id:
           new_generator_mappings: false
   datasource: # wapi
-    jdbcUrl: jdbc:h2:mem:kspia_wapi_op;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS kspia_wapi_op
+    jdbcUrl: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS test
     username: sa
     password: sa
   second-datasource: # reporting
-    jdbcUrl: jdbc:h2:mem:reporting;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS reporting
+    jdbcUrl: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS test
     username: sa
     password: sa
