@@ -1,7 +1,6 @@
 package com.waterleak.service;
 
 import com.waterleak.WaterLeak;
-import com.waterleak.config.Globals;
 import com.waterleak.dao.reporting.AckNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
@@ -20,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Calendar;
 import java.util.Optional;
 
+import static com.waterleak.config.Globals.REPORTING_TRANSACTION_MANAGER;
+import static com.waterleak.config.Globals.WPI_TRANSACTION_MANAGER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,7 +39,7 @@ public class WaterLeakProcessServiceTest {
     }
 
     @Test
-    @Transactional(Globals.REPORTING_TRANSACTION_MANAGER)
+    @Transactional(REPORTING_TRANSACTION_MANAGER)
     public void AckNbiot_단건_조회() {
         AckNbiot instruct = AckNbiot.builder()
                 .imei("123456789012345")
@@ -55,37 +56,47 @@ public class WaterLeakProcessServiceTest {
     }
 
     @Test
-    @Transactional(Globals.WPI_TRANSACTION_MANAGER)
-    public void 누수점검이_상태가_R_인_수용가리스트_조회_테스트() {
-    }
-
-    @Test
-    @Transactional(Globals.REPORTING_TRANSACTION_MANAGER)
+    @Transactional(REPORTING_TRANSACTION_MANAGER)
     public void 주기변경_10분_명령어_등록_테스트() {
     }
 
     @Test
-    @Transactional(Globals.WPI_TRANSACTION_MANAGER)
+    @Transactional(WPI_TRANSACTION_MANAGER)
+    public void 누수점검이_상태가_R_인_수용가리스트_조회_테스트() {
+    }
+
+    @Test
+    @Transactional(WPI_TRANSACTION_MANAGER)
     public void 상태가_R_인_수용가의_단말기_10분_주기변경여부확인_테스트() {
     }
 
     @Test
-    @Transactional(Globals.WPI_TRANSACTION_MANAGER)
-    public void 주기변경_완료후_누수점검_시작_테스트() {
+    @Transactional(WPI_TRANSACTION_MANAGER)
+    public void 일부_단말기의_10분_주기변경실패시_로직_테스트() {
     }
 
     @Test
-    @Transactional(Globals.WPI_TRANSACTION_MANAGER)
+    @Transactional(WPI_TRANSACTION_MANAGER)
+    public void 점검대상_단말기_주기변경_완료후_누수점검_시작_테스트() {
+    }
+
+    @Test
+    @Transactional(WPI_TRANSACTION_MANAGER)
     public void 누수점검_종료일이_도래한_수용가리스트_조회_및누수점검_종료_테스트() {
     }
 
     @Test
-    @Transactional(Globals.REPORTING_TRANSACTION_MANAGER)
+    @Transactional(REPORTING_TRANSACTION_MANAGER)
     public void 주기변경_60분_명령어_등록_테스트() {
     }
 
     @Test
-    @Transactional(Globals.WPI_TRANSACTION_MANAGER)
+    @Transactional(WPI_TRANSACTION_MANAGER)
+    public void 일부_단말기의_60분_주기변경실패시_로직_테스트() {
+    }
+
+    @Test
+    @Transactional(WPI_TRANSACTION_MANAGER)
     public void 점검이완료된_수용가들의_60분_주기변경여부확인_테스트() {
     }
 }
