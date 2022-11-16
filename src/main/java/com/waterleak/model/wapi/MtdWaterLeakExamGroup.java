@@ -9,10 +9,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "MTD_NB_WATER_LEAK_EXAM_GROUP")
 @Getter
 @NoArgsConstructor
+@Table(name = "MTD_NB_WATER_LEAK_EXAM_GROUP")
+@Entity
 public class MtdWaterLeakExamGroup {
 	@Id
 	@Column(name = "EXAM_GROUP_IDX", length = 20)

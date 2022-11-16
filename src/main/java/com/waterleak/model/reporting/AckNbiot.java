@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 @Getter
-@Entity
-@Table(name = "ack_nbiot")
 @NoArgsConstructor
+@Table(name = "ack_nbiot")
+@Entity
 public class AckNbiot {
     @Id
     @Column(name = "IMEI", unique=true, length = 50)
