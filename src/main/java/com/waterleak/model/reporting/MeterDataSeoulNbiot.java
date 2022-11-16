@@ -15,12 +15,15 @@ import java.sql.Timestamp;
 @Entity
 public class MeterDataSeoulNbiot implements Serializable {
     @Id
-    @Column(name = "IMEI", unique=true, length = 50)
+    @Column(name = "IMEI", length = 50)
     private String imei;
 
     @Id
     @Column(name = "METERING_DATE")
     private Timestamp meteringDate;
+
+    @Column(name = "IMSI", length = 50)
+    private String imsi;
 
     @Column(name = "METERING_VALUE")
     private Double meteringValue;

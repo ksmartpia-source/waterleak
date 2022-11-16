@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface MtdWaterLeakExamGroupRepository extends JpaRepository<MtdWaterLeakExamGroup, Long> {
-
     List<MtdWaterLeakExamGroup> findAllByExamStatus(String examStatus);
 }
