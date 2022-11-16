@@ -55,9 +55,11 @@ public class WaterLeakProcessServiceTest {
 
     @Test
     @Transactional(REPORTING_TRANSACTION_MANAGER)
-    public void MeterDataSeoulNbiot_조회() {
-        List<MeterDataSeoulNbiot> result = seoulNbiotRepository.findAll();
-        assertEquals(result.size(), 20);
+    public void IMEI_활용_MeterDataSeoulNbiot_조회_테스트() {
+        String targetImei = "864700040744484";
+        List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findAllByImeiOrderByMeteringDateDesc(targetImei);
+        assertEquals(seoulNbiots.size(), 20);
+        assertEquals(seoulNbiots.get(0).getImei(), targetImei);
     }
 
     @Test
