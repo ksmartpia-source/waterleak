@@ -53,20 +53,22 @@ public class WaterLeakProcessService {
         int checkListSize = seoulNbiots.size();
         List<Boolean> resultList = new ArrayList<>();
 
-        for (int i = 0; i < checkListSize - 1; i++) {
-            long diffMin = (meteringDates.get(i).getTime() - meteringDates.get(i + 1).getTime()) / 60000; //분 차이
-            if (10L == diffMin) {
-                resultList.add(true);
-            } else {
-                resultList.add(false);
-            }
+        if (checkListSize < 9) {
+            return false;
         }
 
-        if(checkListSize > 9) {
-            return resultList.stream().filter(i -> i).count() > 5;
-        } else {
-            return resultList.stream().allMatch(i -> i);
+        for (int i = 0; i < checkListSize - 1; i++) {
+            long diffMin = (meteringDates.get(i).getTime() - meteringDates.get(i + 1).getTime()) / 60000; //분 차이
+            resultList.add(10L == diffMin);
         }
+
+        int trueCount = 0;
+        for (Boolean result : resultList) {
+            if (result) {
+                trueCount++;
+            }
+        }
+        return trueCount > 4;
     }
 
 }
