@@ -47,7 +47,7 @@ public class WaterLeakProcessService {
         return AckNbiotById.get().convertToDto();
     }
 
-    public boolean isTenMinuteCycleVerification(String imei) {
+    public boolean isCycleChangeVerification(String imei, Long cycle) {
         List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findTop10ByImeiOrderByMeteringDateDesc(imei);
         List<Timestamp> meteringDates = seoulNbiots.stream().map(MeterDataSeoulNbiot::getMeteringDate).collect(Collectors.toList());
         int checkListSize = seoulNbiots.size();
@@ -59,7 +59,7 @@ public class WaterLeakProcessService {
 
         for (int i = 0; i < checkListSize - 1; i++) {
             long diffMin = (meteringDates.get(i).getTime() - meteringDates.get(i + 1).getTime()) / 60000; //분 차이
-            resultList.add(10L == diffMin);
+            resultList.add(cycle == diffMin);
         }
 
         int trueCount = 0;
