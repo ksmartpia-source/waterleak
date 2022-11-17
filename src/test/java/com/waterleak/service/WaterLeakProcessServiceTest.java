@@ -62,6 +62,14 @@ public class WaterLeakProcessServiceTest {
     }
 
     @Test
+    public void 주기변경_10분_검증_테스트() {
+    }
+
+    @Test
+    public void 주기변경_60분_검증_테스트() {
+    }
+
+    @Test
     public void 누수점검이_상태가_R_인_수용가리스트_조회_테스트() {
     }
 
