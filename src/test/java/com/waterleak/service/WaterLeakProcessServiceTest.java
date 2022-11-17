@@ -52,9 +52,8 @@ public class WaterLeakProcessServiceTest {
     @Test
     public void 주기변경_10분_검증_테스트() {
         String tenMinIMEI = "864447051283958";
-        List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findAllByImeiOrderByMeteringDateDesc(tenMinIMEI);
-        assertEquals(seoulNbiots.size(), 20);
-        assertEquals(seoulNbiots.get(0).getImei(), tenMinIMEI);
+        Boolean result = leakProcessService.isTenMinuteCycleVerification(tenMinIMEI);
+        assertEquals(true, result);
     }
 
     @Test
