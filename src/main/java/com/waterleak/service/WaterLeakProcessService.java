@@ -1,5 +1,8 @@
 package com.waterleak.service;
 
+import static com.waterleak.config.Globals.CHECK_LIST_SIZE;
+import static com.waterleak.config.Globals.RESULT_TRUE_COUNT;
+
 import com.waterleak.config.Globals;
 import com.waterleak.dao.reporting.AckNbiotRepository;
 import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
@@ -10,16 +13,13 @@ import com.waterleak.model.reporting.AckNbiot;
 import com.waterleak.model.reporting.MeterDataSeoulNbiot;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
 import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.Date;
-import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -53,7 +53,7 @@ public class WaterLeakProcessService {
         int checkListSize = seoulNbiots.size();
         List<Boolean> resultList = new ArrayList<>();
 
-        if (checkListSize < 9) {
+        if (checkListSize < CHECK_LIST_SIZE) {
             return false;
         }
 
@@ -68,7 +68,7 @@ public class WaterLeakProcessService {
                 trueCount++;
             }
         }
-        return trueCount > 4;
+        return trueCount > RESULT_TRUE_COUNT;
     }
 
 }
