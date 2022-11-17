@@ -2,12 +2,18 @@ package com.waterleak.service;
 
 import com.waterleak.config.Globals;
 import com.waterleak.dao.reporting.AckNbiotRepository;
+import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import com.waterleak.dto.AckNbiotDto;
 import com.waterleak.model.reporting.AckNbiot;
+import com.waterleak.model.reporting.MeterDataSeoulNbiot;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
 import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +28,7 @@ public class WaterLeakProcessService {
     private final MtdWaterLeakExamGroupRepository groupRepository;
     private final MtdWaterLeakExamWateruserRepository wateruserRepository;
     private final AckNbiotRepository ackNbiotRepository;
+    private final MeterDataSeoulNbiotRepository seoulNbiotRepository;
 
     public List<MtdWaterLeakExamWateruser> getNotYetStartExamWaterUsers(){
         List<MtdWaterLeakExamWateruser> leakExamReadyWaterUsers = new ArrayList<MtdWaterLeakExamWateruser>();
@@ -37,6 +44,19 @@ public class WaterLeakProcessService {
         if(!AckNbiotById.isPresent())
              throw new RuntimeException("no exist imei");
         return AckNbiotById.get().convertToDto();
+    }
+
+    public boolean isTenMinuteCycleVerification(String imei) {
+        List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findTop10ByImeiOrderByMeteringDateDesc(imei);
+        List<Timestamp> meteringDates = seoulNbiots.stream().map(MeterDataSeoulNbiot::getMeteringDate).collect(Collectors.toList());
+        long tenMinute = 10L;
+        for (int i = 0; i < 9; i++) {
+            long diffMin = (meteringDates.get(i).getTime() - meteringDates.get(i + 1).getTime()) / 60000; //분 차이
+            if (tenMinute != diffMin) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

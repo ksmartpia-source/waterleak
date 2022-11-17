@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface MeterDataSeoulNbiotRepository extends JpaRepository<MeterDataSeoulNbiot, MeterDataSeoulNbiotPK> {
-    List<MeterDataSeoulNbiot> findAllByImeiOrderByMeteringDateDesc(String imei);
+    List<MeterDataSeoulNbiot> findTop10ByImeiOrderByMeteringDateDesc(String imei);
 }
