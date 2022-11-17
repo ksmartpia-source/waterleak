@@ -1,6 +1,7 @@
 package com.waterleak.service;
 
 import com.waterleak.WaterLeak;
+import com.waterleak.config.Globals;
 import com.waterleak.dao.reporting.AckNbiotRepository;
 import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
@@ -52,13 +53,16 @@ public class WaterLeakProcessServiceTest {
     @Test
     public void 주기변경_10분_검증_테스트() {
         String tenMinIMEI = "864447051283958";
-        List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findAllByImeiOrderByMeteringDateDesc(tenMinIMEI);
-        assertEquals(seoulNbiots.size(), 20);
-        assertEquals(seoulNbiots.get(0).getImei(), tenMinIMEI);
+        Boolean result = leakProcessService.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_10_MIN);
+        assertEquals(true, result);
     }
 
     @Test
     public void 주기변경_60분_검증_테스트() {
+        String tenMinIMEI = "864700040744484";
+        Boolean result = leakProcessService.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_60_MIN);
+        assertEquals(true, result);
+
     }
 
     @Test

@@ -15,5 +15,10 @@ public class Globals {
     public static final String STATUS= "status";
 
     public static final String SUCCESS_ADD_MODEM_MESSAGE= "status";
+
+    public static final int CHECK_LIST_SIZE = 9;
+    public static final int RESULT_TRUE_COUNT = 4;
+    public static final Long CYCLE_10_MIN = 10L;
+    public static final Long CYCLE_60_MIN = 60L;
 }
 
