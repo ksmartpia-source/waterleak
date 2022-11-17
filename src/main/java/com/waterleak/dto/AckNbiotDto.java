@@ -25,10 +25,13 @@ public class AckNbiotDto {
 
     public AckNbiot convertToEntity() {
         AckNbiot.AckNbiotBuilder builder = AckNbiot.builder();
-        if(StringUtils.hasText(this.imei))
-            builder.imei(this.imei);
-        if(StringUtils.hasText(this.nbInstruction))
-            builder.nbInstruction(this.nbInstruction);
+        if (!StringUtils.hasText(this.imei))
+            throw new RuntimeException("IMEM를 확인해 주세요");
+        if (!StringUtils.hasText(this.nbInstruction))
+            throw new RuntimeException("주기변경 명령어를 확인해 주세요");
+
+        builder.nbInstruction(this.nbInstruction);
+        builder.imei(this.imei);
         builder.insertDate(LocalDateTime.now());
         return builder.build();
     }

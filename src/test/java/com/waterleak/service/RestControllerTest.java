@@ -43,4 +43,20 @@ public class RestControllerTest {
                 .andExpect(status().is2xxSuccessful())
                 .andDo(print());
     }
+
+    @Test
+    public void 주기변경_명령어_등록_실패_테스트() throws Exception {
+        AckNbiotDto ackNbiotDto = AckNbiotDto.builder()
+                .nbInstruction("QLI")
+                .build();
+        this.mockMvc
+                .perform(
+                        post("/add-instruction")
+                                .content(mapper.writeValueAsString(ackNbiotDto))
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .accept(MediaType.APPLICATION_JSON_VALUE)
+                )
+                .andExpect(status().is5xxServerError())
+                .andDo(print());
+    }
 }
