@@ -16,7 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +39,7 @@ public class WaterLeakProcessServiceTest {
         AckNbiot instruct = AckNbiot.builder()
                 .imei("890123456719876")
                 .nbInstruction("QSDF")
-                .insertDate(Calendar.getInstance())
+                .insertDate(LocalDateTime.now())
                 .build();
         AckNbiot savedAckNbiot = ackNbiotRepository.save(instruct);
         final Optional<AckNbiot> result = ackNbiotRepository.findById(savedAckNbiot.getImei());
@@ -55,10 +55,6 @@ public class WaterLeakProcessServiceTest {
         List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findAllByImeiOrderByMeteringDateDesc(targetImei);
         assertEquals(seoulNbiots.size(), 20);
         assertEquals(seoulNbiots.get(0).getImei(), targetImei);
-    }
-
-    @Test
-    public void 주기변경_10분_명령어_등록_테스트() {
     }
 
     @Test

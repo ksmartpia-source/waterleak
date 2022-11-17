@@ -1,17 +1,16 @@
 package com.waterleak.model.reporting;
 
 import com.waterleak.dto.AckNbiotDto;
-import java.util.Calendar;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -26,15 +25,14 @@ public class AckNbiot {
     private String nbInstruction;
 
     @CreatedDate
-    @Column(name = "INSERT_DATE", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Calendar insertDate;
+    @Column(name = "INSERT_DATE", columnDefinition = "TIMESTAMP")
+    private LocalDateTime insertDate;
 
     @Column(name = "UPDATE_DATE", nullable = true, updatable = true)
-    private Calendar updateDate;
+    private LocalDateTime updateDate;
 
     @Builder
-    public AckNbiot(String imei, String nbInstruction, Calendar insertDate, Calendar updateDate) {
+    public AckNbiot(String imei, String nbInstruction, LocalDateTime insertDate, LocalDateTime updateDate) {
         this.imei = imei;
         this.nbInstruction = nbInstruction;
         this.insertDate = insertDate;
