@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.waterleak.config.Globals.*;
 
@@ -27,10 +28,11 @@ import static com.waterleak.config.Globals.*;
 public class WaterLeakProcessService {
 
     private final MtdWaterLeakExamGroupRepository groupRepository;
-    private final MtdWaterLeakExamWateruserRepository wateruserRepository;
+    private final MtdWaterLeakExamWateruserRepository leakWateruserRepository;
     private final AckNbiotRepository ackNbiotRepository;
     private final MeterDataSeoulNbiotRepository seoulNbiotRepository;
 
+    @Transactional
     public List<MtdWaterLeakExamWateruser> getNotYetStartExamWaterUsers() {
         List<MtdWaterLeakExamWateruser> leakExamReadyWaterUsers = new ArrayList<MtdWaterLeakExamWateruser>();
         List<MtdWaterLeakExamGroup> MtdWaterLeakExamReadyGroups = groupRepository.findAllByExamStatus(WATERLEAK_STATUS_READY);

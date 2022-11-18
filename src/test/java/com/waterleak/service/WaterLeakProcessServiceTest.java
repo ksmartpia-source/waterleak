@@ -8,7 +8,7 @@ import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import com.waterleak.dto.AckNbiotDto;
 import com.waterleak.model.reporting.AckNbiot;
-import com.waterleak.model.reporting.MeterDataSeoulNbiot;
+import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,10 +67,15 @@ public class WaterLeakProcessServiceTest {
 
     @Test
     public void 누수점검이_상태가_R_인_수용가리스트_조회_테스트() {
+        List<MtdWaterLeakExamWateruser> notYetStartExamWaterUsers = leakProcessService.getNotYetStartExamWaterUsers();
     }
 
     @Test
     public void 상태가_R_인_수용가의_단말기_10분_주기변경여부확인_테스트() {
+    }
+
+    @Test
+    public void 누수점검_시작_테스트() {
     }
 
     @Test
