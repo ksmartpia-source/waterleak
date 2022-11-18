@@ -40,22 +40,6 @@ public class WaterLeakProcessServiceTest {
 
     @Test
     @Transactional
-    public void AckNbiot_단건_조회() {
-        AckNbiot instruct = AckNbiot.builder()
-                .imei("890123456719876")
-                .nbInstruction("QSDF")
-                .insertDate(LocalDateTime.now())
-                .build();
-        AckNbiot savedAckNbiot = ackNbiotRepository.save(instruct);
-        final Optional<AckNbiot> result = ackNbiotRepository.findById(savedAckNbiot.getImei());
-        assertTrue(result.isPresent());
-        AckNbiotDto ackNbiotBy = leakProcessService.getAckNbiotBy(instruct.getImei());
-        assertEquals(savedAckNbiot.getImei(), ackNbiotBy.getImei());
-        assertEquals(savedAckNbiot.getNbInstruction(), ackNbiotBy.getNbInstruction());
-    }
-
-    @Test
-    @Transactional
     public void 주기변경_10분_검증_테스트() {
         String tenMinIMEI = "864447051283958";
         Boolean result = leakProcessService.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_10_MIN);

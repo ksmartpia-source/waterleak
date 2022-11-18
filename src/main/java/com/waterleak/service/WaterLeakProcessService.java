@@ -31,14 +31,6 @@ public class WaterLeakProcessService {
     private final AckNbiotRepository ackNbiotRepository;
     private final MeterDataSeoulNbiotRepository seoulNbiotRepository;
 
-    public AckNbiotDto getAckNbiotBy(String imei) {
-        Optional<AckNbiot> AckNbiotById = ackNbiotRepository.findById(imei);
-        if (!AckNbiotById.isPresent()) {
-            throw new RuntimeException("no exist imei");
-        }
-        return AckNbiotById.get().convertToDto();
-    }
-
     @Transactional
     public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
         int changeUsers = 0;
