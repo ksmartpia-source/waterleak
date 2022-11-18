@@ -26,7 +26,6 @@ import static com.waterleak.config.Globals.RESULT_TRUE_COUNT;
 @Service
 @RequiredArgsConstructor
 public class WaterLeakProcessService {
-
     private final MtdWaterLeakExamGroupRepository groupRepository;
     private final MtdWaterLeakExamWateruserRepository leakWateruserRepository;
     private final AckNbiotRepository ackNbiotRepository;
@@ -43,7 +42,7 @@ public class WaterLeakProcessService {
     @Transactional
     public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
         int changeUsers = 0;
-        List<MtdWaterLeakExamWateruser> leakWaterUsers = group.getLeakWaterUsers();
+        List<MtdWaterLeakExamWateruser> leakWaterUsers = leakWateruserRepository.findAllByExamGroup(group);
         for (MtdWaterLeakExamWateruser leakWaterUser : leakWaterUsers) {
             if (isCycleChangeVerification(leakWaterUser.getImei(), Globals.CYCLE_10_MIN))
                 changeUsers++;
@@ -54,12 +53,18 @@ public class WaterLeakProcessService {
     }
 
     @Transactional
+    public void startWaterLeakExam(MtdWaterLeakExamGroup group) {
+        if(isReadyToStart(group))
+            group.changeGroupStatusWithStart();
+        groupRepository.save(group);
+    }
+
+    @Transactional
     public boolean isCycleChangeVerification(String imei, Long cycle) {
         List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findTop10ByImeiOrderByMeteringDateDesc(imei);
         List<Timestamp> meteringDates = seoulNbiots.stream().map(MeterDataSeoulNbiot::getMeteringDate).collect(Collectors.toList());
         int checkListSize = seoulNbiots.size();
         List<Boolean> resultList = new ArrayList<>();
-
         if (checkListSize < CHECK_LIST_SIZE) {
             return false;
         }

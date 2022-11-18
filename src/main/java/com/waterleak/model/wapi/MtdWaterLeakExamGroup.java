@@ -1,5 +1,8 @@
 package com.waterleak.model.wapi;
 
+import static com.waterleak.config.Globals.WATERLEAK_STATUS_START;
+
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -50,5 +53,11 @@ public class MtdWaterLeakExamGroup {
 	public void setLeakWaterUsers(
 			List<MtdWaterLeakExamWateruser> leakWaterUsers) {
 		this.leakWaterUsers = leakWaterUsers;
+	}
+
+	public void changeGroupStatusWithStart() {
+		this.examStatus = WATERLEAK_STATUS_START;
+		this.examStartedDt = new Timestamp(System.currentTimeMillis());
+		this.examFinishiedDt = Timestamp.valueOf(LocalDate.now().plusDays(3).atStartOfDay());
 	}
 }

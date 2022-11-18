@@ -24,6 +24,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
@@ -72,17 +73,27 @@ public class WaterLeakProcessServiceTest {
     @Test
     @Transactional
     public void 상태가_R_인_수용가의_단말기_10분_주기변경여부확인_테스트() {
+        //given
         MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
-        List<MtdWaterLeakExamWateruser> allByExamGroup = wateruserRepository
-            .findAllByExamGroup(group);
-        group.setLeakWaterUsers(allByExamGroup);
-
+        //when
         Boolean result = leakProcessService.isReadyToStart(group);
+        //then
         assertEquals(true, result);
     }
 
     @Test
+    @Transactional
     public void 누수점검_시작_테스트() {
+        //given
+        MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
+        //when
+        leakProcessService.startWaterLeakExam(group);
+        //then
+        MtdWaterLeakExamGroup startedGroup = groupRepository.findById(1L).get();
+        assertEquals(Globals.WATERLEAK_STATUS_START, startedGroup.getExamStatus());
+        assertNotNull(startedGroup.getExamPlanStartDt());
+        assertNotNull(startedGroup.getExamStartedDt());
+        assertNotNull(startedGroup.getExamFinishiedDt());
     }
 
     @Test
