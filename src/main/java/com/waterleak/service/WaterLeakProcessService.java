@@ -41,6 +41,19 @@ public class WaterLeakProcessService {
     }
 
     @Transactional
+    public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
+        int changeUsers = 0;
+        List<MtdWaterLeakExamWateruser> leakWaterUsers = leakWateruserRepository.findAllByExamGroup(group);
+        for (MtdWaterLeakExamWateruser leakWaterUser : leakWaterUsers) {
+            if (isCycleChangeVerification(leakWaterUser.getImei(), Globals.CYCLE_10_MIN))
+                changeUsers++;
+        }
+        if (changeUsers == leakWaterUsers.size())
+            return true;
+        return false;
+    }
+
+    @Transactional
     public boolean isCycleChangeVerification(String imei, Long cycle) {
         List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findTop10ByImeiOrderByMeteringDateDesc(imei);
         List<Timestamp> meteringDates = seoulNbiots.stream().map(MeterDataSeoulNbiot::getMeteringDate).collect(Collectors.toList());
@@ -63,19 +76,6 @@ public class WaterLeakProcessService {
             }
         }
         return trueCount > RESULT_TRUE_COUNT;
-    }
-
-    @Transactional
-    public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
-        int changeUsers = 0;
-        List<MtdWaterLeakExamWateruser> leakWaterUsers = leakWateruserRepository.findAllByExamGroup(group);
-        for (MtdWaterLeakExamWateruser leakWaterUser : leakWaterUsers) {
-            if (isCycleChangeVerification(leakWaterUser.getImei(), Globals.CYCLE_10_MIN))
-                changeUsers++;
-        }
-        if (changeUsers == leakWaterUsers.size())
-            return true;
-        return false;
     }
 }
 
