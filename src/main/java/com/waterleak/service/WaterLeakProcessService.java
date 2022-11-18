@@ -1,35 +1,36 @@
 package com.waterleak.service;
 
+import static com.waterleak.config.Globals.CHECK_LIST_SIZE;
+import static com.waterleak.config.Globals.RESULT_TRUE_COUNT;
+
 import com.waterleak.config.Globals;
-import com.waterleak.dao.reporting.AckNbiotRepository;
 import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
-import com.waterleak.dto.AckNbiotDto;
-import com.waterleak.model.reporting.AckNbiot;
 import com.waterleak.model.reporting.MeterDataSeoulNbiot;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
 import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static com.waterleak.config.Globals.CHECK_LIST_SIZE;
-import static com.waterleak.config.Globals.RESULT_TRUE_COUNT;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class WaterLeakProcessService {
     private final MtdWaterLeakExamGroupRepository groupRepository;
     private final MtdWaterLeakExamWateruserRepository leakWateruserRepository;
-    private final AckNbiotRepository ackNbiotRepository;
     private final MeterDataSeoulNbiotRepository seoulNbiotRepository;
+
+    @Transactional
+    public void startWaterLeakExam(MtdWaterLeakExamGroup group) {
+        if(isReadyToStart(group))
+            group.changeGroupStatusWithStart();
+        groupRepository.save(group);
+    }
 
     @Transactional
     public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
@@ -42,13 +43,6 @@ public class WaterLeakProcessService {
         if (changeUsers == leakWaterUsers.size())
             return true;
         return false;
-    }
-
-    @Transactional
-    public void startWaterLeakExam(MtdWaterLeakExamGroup group) {
-        if(isReadyToStart(group))
-            group.changeGroupStatusWithStart();
-        groupRepository.save(group);
     }
 
     @Transactional

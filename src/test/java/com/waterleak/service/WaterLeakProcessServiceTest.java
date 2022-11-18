@@ -1,16 +1,15 @@
 package com.waterleak.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import com.waterleak.WaterLeak;
 import com.waterleak.config.Globals;
 import com.waterleak.dao.reporting.AckNbiotRepository;
 import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
-import com.waterleak.dto.AckNbiotDto;
-import com.waterleak.model.reporting.AckNbiot;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
-import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
-import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +18,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = WaterLeak.class)
@@ -81,30 +73,45 @@ public class WaterLeakProcessServiceTest {
     }
 
     @Test
+    @Transactional
+    public void 누수점검_종료_테스트() {
+        //given
+        //when
+        //then
+    }
+
+    @Test
+    @Transactional
     public void 일부_단말기의_10분_주기변경실패시_로직_테스트() {
     }
 
     @Test
+    @Transactional
     public void 점검대상_단말기_주기변경_완료후_누수점검_시작_테스트() {
     }
 
     @Test
+    @Transactional
     public void 누수점검_종료일이_도래한_수용가리스트_조회_및누수점검_종료_테스트() {
     }
 
     @Test
+    @Transactional
     public void 주기변경_60분_명령어_등록_테스트() {
     }
 
     @Test
+    @Transactional
     public void 일부_단말기의_60분_주기변경실패시_로직_테스트() {
     }
 
     @Test
+    @Transactional
     public void 점검이완료된_수용가들의_60분_주기변경여부확인_테스트() {
     }
 
     @Test
+    @Transactional
     public void 검침데이터_10분단위_를바탕으로_사용량을_계산_테스트() {
     }
 }

@@ -3,6 +3,7 @@ package com.waterleak.model.wapi;
 import static com.waterleak.config.Globals.WATERLEAK_STATUS_START;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,13 +30,13 @@ public class MtdWaterLeakExamGroup {
 	private String examNm;
 	
 	@Column(name = "EXAM_PLAN_START_DT")
-	private Timestamp examPlanStartDt;
+	private LocalDateTime examPlanStartDt;
 	
 	@Column(name = "EXAM_STARTED_DT", nullable = true)
-	private Timestamp examStartedDt;
+	private LocalDateTime examStartedDt;
 	
 	@Column(name = "EXAM_FINISHED_DT", nullable = true)
-	private Timestamp examFinishiedDt;
+	private LocalDateTime examFinishiedDt;
 	
 	@Column(name = "EXAM_STATUS", length = 10)
 	private String examStatus;
@@ -57,7 +58,7 @@ public class MtdWaterLeakExamGroup {
 
 	public void changeGroupStatusWithStart() {
 		this.examStatus = WATERLEAK_STATUS_START;
-		this.examStartedDt = new Timestamp(System.currentTimeMillis());
-		this.examFinishiedDt = Timestamp.valueOf(LocalDate.now().plusDays(3).atStartOfDay());
+		this.examStartedDt = LocalDateTime.now();
+		this.examFinishiedDt = LocalDateTime.now().plusDays(3);
 	}
 }
