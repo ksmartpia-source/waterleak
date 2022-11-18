@@ -59,6 +59,28 @@ public class WaterLeakProcessServiceTest {
 
     @Test
     @Transactional
+    public void 상태가_R_이고_모든_수용가의_단말기_10분_주기변경이_성공한_경우() {
+        //given
+        MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
+        //when
+        Boolean result = leakProcessService.allUsersChangeSuccess(group);
+        //then
+        assertEquals(true, result);
+    }
+
+    @Test
+    @Transactional
+    public void 상태가_R_이고_몇몇의_수용가만_10분_주기변경이_성공한_경우() {
+        //given
+        MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
+        //when
+        Boolean result = leakProcessService.someUsersChangeSuccess(group);
+        //then
+        assertEquals(true, result);
+    }
+
+    @Test
+    @Transactional
     public void 누수점검_시작_테스트() {
         //given
         MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();

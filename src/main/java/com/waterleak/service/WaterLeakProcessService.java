@@ -34,8 +34,17 @@ public class WaterLeakProcessService {
 
     @Transactional
     public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
+        if (allUsersChangeSuccess(group)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean allUsersChangeSuccess(MtdWaterLeakExamGroup group) {
         int changeUsers = 0;
-        List<MtdWaterLeakExamWateruser> leakWaterUsers = leakWateruserRepository.findAllByExamGroup(group);
+        List<MtdWaterLeakExamWateruser> leakWaterUsers = leakWateruserRepository.findAllByExamGroup(
+            group);
         for (MtdWaterLeakExamWateruser leakWaterUser : leakWaterUsers) {
             if (isCycleChangeVerification(leakWaterUser.getImei(), Globals.CYCLE_10_MIN))
                 changeUsers++;
@@ -43,6 +52,11 @@ public class WaterLeakProcessService {
         if (changeUsers == leakWaterUsers.size())
             return true;
         return false;
+    }
+
+    public boolean someUsersChangeSuccess(MtdWaterLeakExamGroup group) {
+
+      return false;
     }
 
     @Transactional
