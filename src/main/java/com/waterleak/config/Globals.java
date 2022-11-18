@@ -4,7 +4,10 @@ public class Globals {
     public static final String WATERLEAK_STATUS_READY = "R";
     public static final String WATERLEAK_STATUS_START = "S";
     public static final String WATERLEAK_STATUS_FINISH = "F";
+
     public static final String WATERLEAK_STATUS_CHANGE_FAIL = "CF";
+    public static final String WATERLEAK_STATUS_CHANGE_10 = "10";
+    public static final String WATERLEAK_STATUS_CHANGE_60 = "60";
 
     public static final String WATERLEAK_RESULT_NORMAL = "N";
     public static final String WATERLEAK_RESULT_LEAK = "L";

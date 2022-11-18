@@ -11,8 +11,10 @@ import com.waterleak.model.reporting.MeterDataSeoulNbiot;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
 import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,39 +29,37 @@ public class WaterLeakProcessService {
 
     @Transactional
     public void startWaterLeakExam(MtdWaterLeakExamGroup group) {
-        if(isReadyToStart(group))
+        if(isReadyToStart(group)){
             group.changeGroupStatusWithStart();
+        }
         groupRepository.save(group);
     }
 
-    @Transactional
     public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
-        if (allUsersChangeSuccess(group)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public boolean allUsersChangeSuccess(MtdWaterLeakExamGroup group) {
         int changeUsers = 0;
-        List<MtdWaterLeakExamWateruser> leakWaterUsers = leakWateruserRepository.findAllByExamGroup(
-            group);
-        for (MtdWaterLeakExamWateruser leakWaterUser : leakWaterUsers) {
-            if (isCycleChangeVerification(leakWaterUser.getImei(), Globals.CYCLE_10_MIN))
+        List<MtdWaterLeakExamWateruser> leakers = leakWateruserRepository.findAllByExamGroup(group);
+        for (MtdWaterLeakExamWateruser leakWaterUser : leakers) {
+            if (isCycleChangeVerification(leakWaterUser.getImei(), Globals.CYCLE_10_MIN)){
+                leakWaterUser.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_10);
                 changeUsers++;
+            }
         }
-        if (changeUsers == leakWaterUsers.size())
+        if (changeUsers == leakers.size())
             return true;
+        if(changeUsers < leakers.size()){
+            if(LocalDateTime.now().isAfter(group.getExamPlanStartDt()) && leakers.size() > 0 ){
+                for (MtdWaterLeakExamWateruser leaker : leakers) {
+                  if(Objects.isNull(leaker.getChangeStatus()) ||
+                      !leaker.getChangeStatus().equals(Globals.WATERLEAK_STATUS_CHANGE_10)){
+                      leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_FAIL);
+                  }
+                }
+                return true;
+            }
+        }
         return false;
     }
 
-    public boolean someUsersChangeSuccess(MtdWaterLeakExamGroup group) {
-
-      return false;
-    }
-
-    @Transactional
     public boolean isCycleChangeVerification(String imei, Long cycle) {
         List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findTop10ByImeiOrderByMeteringDateDesc(imei);
         List<Timestamp> meteringDates = seoulNbiots.stream().map(MeterDataSeoulNbiot::getMeteringDate).collect(Collectors.toList());

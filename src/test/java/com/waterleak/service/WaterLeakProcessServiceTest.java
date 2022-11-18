@@ -10,6 +10,8 @@ import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
+import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
+import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,24 +50,18 @@ public class WaterLeakProcessServiceTest {
 
     @Test
     @Transactional
-    public void 상태가_R_인_수용가의_단말기_10분_주기변경여부확인_테스트() {
+    public void 상태가_R_이고_모든_수용가의_단말기_10분_주기변경이_성공한_경우() {
         //given
         MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
         //when
         Boolean result = leakProcessService.isReadyToStart(group);
         //then
         assertEquals(true, result);
-    }
-
-    @Test
-    @Transactional
-    public void 상태가_R_이고_모든_수용가의_단말기_10분_주기변경이_성공한_경우() {
-        //given
-        MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
-        //when
-        Boolean result = leakProcessService.allUsersChangeSuccess(group);
-        //then
-        assertEquals(true, result);
+        MtdWaterLeakExamGroup savedGroup = groupRepository.findById(1L).get();
+        List<MtdWaterLeakExamWateruser> leakWaterUsers = wateruserRepository.findAllByExamGroup(savedGroup);
+        for (MtdWaterLeakExamWateruser leakWaterUser : leakWaterUsers) {
+            assertEquals(Globals.WATERLEAK_STATUS_CHANGE_10, leakWaterUser.getChangeStatus());
+        }
     }
 
     @Test
@@ -74,7 +70,7 @@ public class WaterLeakProcessServiceTest {
         //given
         MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
         //when
-        Boolean result = leakProcessService.someUsersChangeSuccess(group);
+        Boolean result = leakProcessService.isReadyToStart(group);
         //then
         assertEquals(true, result);
     }

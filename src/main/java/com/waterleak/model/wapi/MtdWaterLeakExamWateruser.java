@@ -26,14 +26,21 @@ public class MtdWaterLeakExamWateruser {
     @Column(name = "IMEI", unique = true, length = 50)
     private String imei;
 
-    @Column(name = "exam_result", nullable = true, length = 5)
+    @Column(name = "EXAM_RESULT", nullable = true, length = 5)
     private String examResult;
 
-    @Column(name = "leak_min_usage", nullable = true, precision = 10, scale = 3)
+    @Column(name = "CHANGE_STATUS", nullable = true, length = 5)
+    private String changeStatus;
+
+    @Column(name = "LEAK_MIN_USAGE", nullable = true, precision = 10, scale = 3)
     private BigDecimal leakMinUsage;
 
     @Column(name = "GROUP_SID")
     private Long groupSid;
+
+    public void updateChangeStatus(String changeStatus) {
+        this.changeStatus = changeStatus;
+    }
 }
 
 
