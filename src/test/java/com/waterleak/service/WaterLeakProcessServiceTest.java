@@ -9,6 +9,8 @@ import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import com.waterleak.dto.AckNbiotDto;
 import com.waterleak.model.reporting.AckNbiot;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
+import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
+import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +73,10 @@ public class WaterLeakProcessServiceTest {
     @Transactional
     public void 상태가_R_인_수용가의_단말기_10분_주기변경여부확인_테스트() {
         MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
+        List<MtdWaterLeakExamWateruser> allByExamGroup = wateruserRepository
+            .findAllByExamGroup(group);
+        group.setLeakWaterUsers(allByExamGroup);
+
         Boolean result = leakProcessService.isReadyToStart(group);
         assertEquals(true, result);
     }

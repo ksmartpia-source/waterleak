@@ -45,5 +45,10 @@ public class MtdWaterLeakExamGroup {
 	private Timestamp createdDate;
 
 	@Column(name = "GROUP_SID")
-	private Long groupSid;	
+	private Long groupSid;
+
+	public void setLeakWaterUsers(
+			List<MtdWaterLeakExamWateruser> leakWaterUsers) {
+		this.leakWaterUsers = leakWaterUsers;
+	}
 }

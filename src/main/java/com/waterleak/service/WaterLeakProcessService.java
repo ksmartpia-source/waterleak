@@ -43,7 +43,7 @@ public class WaterLeakProcessService {
     @Transactional
     public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
         int changeUsers = 0;
-        List<MtdWaterLeakExamWateruser> leakWaterUsers = leakWateruserRepository.findAllByExamGroup(group);
+        List<MtdWaterLeakExamWateruser> leakWaterUsers = group.getLeakWaterUsers();
         for (MtdWaterLeakExamWateruser leakWaterUser : leakWaterUsers) {
             if (isCycleChangeVerification(leakWaterUser.getImei(), Globals.CYCLE_10_MIN))
                 changeUsers++;
