@@ -59,6 +59,18 @@ public class WaterLeakProcessService {
         return true;
     }
 
+    @Transactional
+    public List<MtdWaterLeakExamGroup> getExamGroupListOfStart() {
+        if(isCycleChangeVerificationOfReadyWaterUser()) {
+            List<MtdWaterLeakExamGroup> readyGroups = groupRepository.findAllByExamStatus(WATERLEAK_STATUS_READY);
+            for (MtdWaterLeakExamGroup readyGroup : readyGroups) {
+                groupRepository.save(readyGroup.changeGroupStatusWithStart());
+            }
+            return readyGroups;
+        }
+        return null;
+    }
+
     public AckNbiotDto getAckNbiotBy(String imei) {
         Optional<AckNbiot> AckNbiotById = ackNbiotRepository.findById(imei);
         if (!AckNbiotById.isPresent()) {

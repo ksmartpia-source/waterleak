@@ -1,13 +1,21 @@
 package com.waterleak.model.wapi;
 
+import static com.waterleak.config.Globals.WATERLEAK_STATUS_START;
+
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-
-import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -45,5 +53,12 @@ public class MtdWaterLeakExamGroup {
 	private Timestamp createdDate;
 
 	@Column(name = "GROUP_SID")
-	private Long groupSid;	
+	private Long groupSid;
+
+	public MtdWaterLeakExamGroup changeGroupStatusWithStart() {
+		this.examStatus = WATERLEAK_STATUS_START;
+		this.examStartedDt = new Timestamp(System.currentTimeMillis());
+		this.examFinishiedDt = Timestamp.valueOf(LocalDate.now().plusDays(3).atStartOfDay());
+		return this;
+	}
 }
