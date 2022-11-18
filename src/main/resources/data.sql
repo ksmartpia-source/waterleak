@@ -119,6 +119,7 @@ create table mtd_nb_water_leak_exam_wateruser
     exam_wateruser_idx bigint not null primary key,
     consumer_sid bigint null,
     exam_result varchar(5) null,
+    change_status varchar(5) null,
     imei varchar(50) null,
     leak_min_usage decimal(10,3) null,
     exam_group_idx bigint null,
