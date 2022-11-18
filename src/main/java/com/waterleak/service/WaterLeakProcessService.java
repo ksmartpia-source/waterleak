@@ -44,13 +44,19 @@ public class WaterLeakProcessService {
         return leakExamReadyWaterUsers;
     }
 
+    @Transactional
     public boolean isCycleChangeVerificationOfReadyWaterUser() {
         List<MtdWaterLeakExamWateruser> leakExamReadyWaterUsers = getNotYetStartExamWaterUsers();
         List<Boolean> resultList = new ArrayList<>();
         for (MtdWaterLeakExamWateruser waterUser : leakExamReadyWaterUsers) {
             resultList.add(isCycleChangeVerification(waterUser.getImei(), CYCLE_10_MIN));
         }
-        return resultList.stream().allMatch(result -> result);
+        for (Boolean result : resultList) {
+            if(!result) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public AckNbiotDto getAckNbiotBy(String imei) {
