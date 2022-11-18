@@ -8,7 +8,7 @@ import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import com.waterleak.dto.AckNbiotDto;
 import com.waterleak.model.reporting.AckNbiot;
-import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
+import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,6 +36,7 @@ public class WaterLeakProcessServiceTest {
     @Autowired private WaterLeakProcessService leakProcessService;
 
     @Test
+    @Transactional
     public void AckNbiot_단건_조회() {
         AckNbiot instruct = AckNbiot.builder()
                 .imei("890123456719876")
@@ -51,6 +52,7 @@ public class WaterLeakProcessServiceTest {
     }
 
     @Test
+    @Transactional
     public void 주기변경_10분_검증_테스트() {
         String tenMinIMEI = "864447051283958";
         Boolean result = leakProcessService.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_10_MIN);
@@ -58,20 +60,19 @@ public class WaterLeakProcessServiceTest {
     }
 
     @Test
+    @Transactional
     public void 주기변경_60분_검증_테스트() {
         String tenMinIMEI = "864700040744484";
         Boolean result = leakProcessService.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_60_MIN);
         assertEquals(true, result);
-
     }
 
     @Test
-    public void 누수점검이_상태가_R_인_수용가리스트_조회_테스트() {
-        List<MtdWaterLeakExamWateruser> notYetStartExamWaterUsers = leakProcessService.getNotYetStartExamWaterUsers();
-    }
-
-    @Test
+    @Transactional
     public void 상태가_R_인_수용가의_단말기_10분_주기변경여부확인_테스트() {
+        MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
+        Boolean result = leakProcessService.isReadyToStart(group);
+        assertEquals(true, result);
     }
 
     @Test

@@ -10,6 +10,9 @@ import com.waterleak.model.reporting.AckNbiot;
 import com.waterleak.model.reporting.MeterDataSeoulNbiot;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
 import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -17,11 +20,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import static com.waterleak.config.Globals.*;
+import static com.waterleak.config.Globals.CHECK_LIST_SIZE;
+import static com.waterleak.config.Globals.RESULT_TRUE_COUNT;
 
 @Service
 @RequiredArgsConstructor
@@ -32,16 +32,6 @@ public class WaterLeakProcessService {
     private final AckNbiotRepository ackNbiotRepository;
     private final MeterDataSeoulNbiotRepository seoulNbiotRepository;
 
-    @Transactional
-    public List<MtdWaterLeakExamWateruser> getNotYetStartExamWaterUsers() {
-        List<MtdWaterLeakExamWateruser> leakExamReadyWaterUsers = new ArrayList<MtdWaterLeakExamWateruser>();
-        List<MtdWaterLeakExamGroup> MtdWaterLeakExamReadyGroups = groupRepository.findAllByExamStatus(WATERLEAK_STATUS_READY);
-        for (MtdWaterLeakExamGroup mtdWaterLeakExamReadyGroup : MtdWaterLeakExamReadyGroups) {
-            leakExamReadyWaterUsers.addAll(mtdWaterLeakExamReadyGroup.getLeakWaterUsers());
-        }
-        return leakExamReadyWaterUsers;
-    }
-
     public AckNbiotDto getAckNbiotBy(String imei) {
         Optional<AckNbiot> AckNbiotById = ackNbiotRepository.findById(imei);
         if (!AckNbiotById.isPresent()) {
@@ -50,6 +40,7 @@ public class WaterLeakProcessService {
         return AckNbiotById.get().convertToDto();
     }
 
+    @Transactional
     public boolean isCycleChangeVerification(String imei, Long cycle) {
         List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findTop10ByImeiOrderByMeteringDateDesc(imei);
         List<Timestamp> meteringDates = seoulNbiots.stream().map(MeterDataSeoulNbiot::getMeteringDate).collect(Collectors.toList());
@@ -74,5 +65,17 @@ public class WaterLeakProcessService {
         return trueCount > RESULT_TRUE_COUNT;
     }
 
+    @Transactional
+    public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
+        int changeUsers = 0;
+        List<MtdWaterLeakExamWateruser> leakWaterUsers = leakWateruserRepository.findAllByExamGroup(group);
+        for (MtdWaterLeakExamWateruser leakWaterUser : leakWaterUsers) {
+            if (isCycleChangeVerification(leakWaterUser.getImei(), Globals.CYCLE_10_MIN))
+                changeUsers++;
+        }
+        if (changeUsers == leakWaterUsers.size())
+            return true;
+        return false;
+    }
 }
 
