@@ -53,8 +53,8 @@ public class WaterLeakProcessServiceTest {
     @Test
     public void 주기변경_10분_검증_테스트() {
         String tenMinIMEI = "864447051283958";
-        Boolean result = leakProcessService.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_10_MIN);
-        assertEquals(true, result);
+        boolean result = leakProcessService.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_10_MIN);
+        assertTrue(result);
     }
 
     @Test
@@ -72,6 +72,8 @@ public class WaterLeakProcessServiceTest {
 
     @Test
     public void 상태가_R_인_수용가의_단말기_10분_주기변경여부확인_테스트() {
+        boolean result = leakProcessService.isCycleChangeVerificationOfReadyWaterUser();
+        assertTrue(result);
     }
 
     @Test

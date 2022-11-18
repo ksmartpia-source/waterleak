@@ -32,6 +32,8 @@ public class WaterLeakProcessService {
     private final AckNbiotRepository ackNbiotRepository;
     private final MeterDataSeoulNbiotRepository seoulNbiotRepository;
 
+
+
     @Transactional
     public List<MtdWaterLeakExamWateruser> getNotYetStartExamWaterUsers() {
         List<MtdWaterLeakExamWateruser> leakExamReadyWaterUsers = new ArrayList<MtdWaterLeakExamWateruser>();
@@ -40,6 +42,15 @@ public class WaterLeakProcessService {
             leakExamReadyWaterUsers.addAll(mtdWaterLeakExamReadyGroup.getLeakWaterUsers());
         }
         return leakExamReadyWaterUsers;
+    }
+
+    public boolean isCycleChangeVerificationOfReadyWaterUser() {
+        List<MtdWaterLeakExamWateruser> leakExamReadyWaterUsers = getNotYetStartExamWaterUsers();
+        List<Boolean> resultList = new ArrayList<>();
+        for (MtdWaterLeakExamWateruser waterUser : leakExamReadyWaterUsers) {
+            resultList.add(isCycleChangeVerification(waterUser.getImei(), CYCLE_10_MIN));
+        }
+        return resultList.stream().allMatch(result -> result);
     }
 
     public AckNbiotDto getAckNbiotBy(String imei) {
