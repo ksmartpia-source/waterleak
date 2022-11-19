@@ -27,7 +27,7 @@ public class WaterLeakProcessFinsihTest {
 
     @Test
     @Transactional
-    public void 누수점검_종료_테스트() {
+    public void 상태가_S_이고_검사종료일이_도래한경우() {
         //given
         //when
         //then
