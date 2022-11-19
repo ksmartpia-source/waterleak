@@ -1,5 +1,6 @@
 package com.waterleak.model.wapi;
 
+import static com.waterleak.config.Globals.WATERLEAK_STATUS_FINISH;
 import static com.waterleak.config.Globals.WATERLEAK_STATUS_START;
 
 import java.time.LocalDate;
@@ -51,14 +52,19 @@ public class MtdWaterLeakExamGroup {
 	@Column(name = "GROUP_SID")
 	private Long groupSid;
 
-	public void setLeakWaterUsers(
-			List<MtdWaterLeakExamWateruser> leakWaterUsers) {
-		this.leakWaterUsers = leakWaterUsers;
+	public void updateExamPlanStartDt(LocalDateTime examPlanStartDt) {
+		this.examPlanStartDt = examPlanStartDt;
 	}
 
-	public void changeGroupStatusWithStart() {
+	public void startExam() {
 		this.examStatus = WATERLEAK_STATUS_START;
 		this.examStartedDt = LocalDateTime.now();
 		this.examFinishiedDt = LocalDateTime.now().plusDays(3);
+	}
+
+	public void failExam() {
+		this.examStatus = WATERLEAK_STATUS_FINISH;
+		this.examStartedDt = LocalDateTime.now();
+		this.examFinishiedDt = LocalDateTime.now();
 	}
 }

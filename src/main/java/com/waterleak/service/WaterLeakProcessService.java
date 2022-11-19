@@ -23,64 +23,81 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class WaterLeakProcessService {
-    private final MtdWaterLeakExamGroupRepository groupRepository;
-    private final MtdWaterLeakExamWateruserRepository leakWateruserRepository;
-    private final MeterDataSeoulNbiotRepository seoulNbiotRepository;
 
-    @Transactional
-    public void startWaterLeakExam(MtdWaterLeakExamGroup group) {
-        if(isReadyToStart(group)){
-            group.changeGroupStatusWithStart();
-        }
-        groupRepository.save(group);
+  private final MtdWaterLeakExamGroupRepository groupRepository;
+  private final MtdWaterLeakExamWateruserRepository leakWateruserRepository;
+  private final MeterDataSeoulNbiotRepository seoulNbiotRepository;
+
+  @Transactional
+  public void startWaterLeakExam(MtdWaterLeakExamGroup group) {
+    if (isReadyToStart(group)) {
+      group.startExam();
+    }
+    groupRepository.save(group);
+  }
+
+  public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
+    int changeUsers = 0;
+    List<MtdWaterLeakExamWateruser> leakers = leakWateruserRepository.findAllByExamGroup(group);
+
+    for (MtdWaterLeakExamWateruser leaker : leakers) {
+      if (isCycleChangeVerification(leaker.getImei(), Globals.CYCLE_10_MIN)) {
+        leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_10);
+        changeUsers++;
+      }
     }
 
-    public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
-        int changeUsers = 0;
-        List<MtdWaterLeakExamWateruser> leakers = leakWateruserRepository.findAllByExamGroup(group);
-        for (MtdWaterLeakExamWateruser leakWaterUser : leakers) {
-            if (isCycleChangeVerification(leakWaterUser.getImei(), Globals.CYCLE_10_MIN)){
-                leakWaterUser.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_10);
-                changeUsers++;
-            }
-        }
-        if (changeUsers == leakers.size())
-            return true;
-        if(changeUsers < leakers.size()){
-            if(LocalDateTime.now().isAfter(group.getExamPlanStartDt()) && leakers.size() > 0 ){
-                for (MtdWaterLeakExamWateruser leaker : leakers) {
-                  if(Objects.isNull(leaker.getChangeStatus()) ||
-                      !leaker.getChangeStatus().equals(Globals.WATERLEAK_STATUS_CHANGE_10)){
-                      leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_FAIL);
-                  }
-                }
-                return true;
-            }
-        }
-        return false;
+    if (changeUsers == leakers.size()) {
+      return true;
     }
 
-    public boolean isCycleChangeVerification(String imei, Long cycle) {
-        List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findTop10ByImeiOrderByMeteringDateDesc(imei);
-        List<Timestamp> meteringDates = seoulNbiots.stream().map(MeterDataSeoulNbiot::getMeteringDate).collect(Collectors.toList());
-        int checkListSize = seoulNbiots.size();
-        List<Boolean> resultList = new ArrayList<>();
-        if (checkListSize < CHECK_LIST_SIZE) {
-            return false;
-        }
-
-        for (int i = 0; i < checkListSize - 1; i++) {
-            long diffMin = (meteringDates.get(i).getTime() - meteringDates.get(i + 1).getTime()) / 60000; //분 차이
-            resultList.add(cycle == diffMin);
-        }
-
-        int trueCount = 0;
-        for (Boolean result : resultList) {
-            if (result) {
-                trueCount++;
-            }
-        }
-        return trueCount > RESULT_TRUE_COUNT;
+    if (changeUsers == 0) {
+      for (MtdWaterLeakExamWateruser leaker : leakers) {
+        leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_FAIL);
+      }
+      group.failExam();
+      groupRepository.save(group);
+      return false;
     }
+
+    if (changeUsers < leakers.size()) {
+      if (LocalDateTime.now().isAfter(group.getExamPlanStartDt()) && leakers.size() > 0) {
+        for (MtdWaterLeakExamWateruser leaker : leakers) {
+          if (Objects.isNull(leaker.getChangeStatus()) ||
+              !leaker.getChangeStatus().equals(Globals.WATERLEAK_STATUS_CHANGE_10)) {
+            leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_FAIL);
+          }
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public boolean isCycleChangeVerification(String imei, Long cycle) {
+    List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository
+        .findTop10ByImeiOrderByMeteringDateDesc(imei);
+    List<Timestamp> meteringDates = seoulNbiots.stream().map(MeterDataSeoulNbiot::getMeteringDate)
+        .collect(Collectors.toList());
+    int checkListSize = seoulNbiots.size();
+    List<Boolean> resultList = new ArrayList<>();
+    if (checkListSize < CHECK_LIST_SIZE) {
+      return false;
+    }
+
+    for (int i = 0; i < checkListSize - 1; i++) {
+      long diffMin =
+          (meteringDates.get(i).getTime() - meteringDates.get(i + 1).getTime()) / 60000; //분 차이
+      resultList.add(cycle == diffMin);
+    }
+
+    int trueCount = 0;
+    for (Boolean result : resultList) {
+      if (result) {
+        trueCount++;
+      }
+    }
+    return trueCount > RESULT_TRUE_COUNT;
+  }
 }
 
