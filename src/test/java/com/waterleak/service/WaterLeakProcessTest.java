@@ -27,26 +27,6 @@ public class WaterLeakProcessTest {
 
     @Test
     @Transactional
-    public void 일부_단말기의_10분_주기변경실패시_로직_테스트() {
-    }
-
-    @Test
-    @Transactional
-    public void 점검대상_단말기_주기변경_완료후_누수점검_시작_테스트() {
-    }
-
-    @Test
-    @Transactional
-    public void 누수점검_종료일이_도래한_수용가리스트_조회_및누수점검_종료_테스트() {
-    }
-
-    @Test
-    @Transactional
-    public void 주기변경_60분_명령어_등록_테스트() {
-    }
-
-    @Test
-    @Transactional
     public void 일부_단말기의_60분_주기변경실패시_로직_테스트() {
     }
 
