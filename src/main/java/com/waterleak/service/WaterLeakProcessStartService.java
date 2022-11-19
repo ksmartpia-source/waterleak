@@ -27,8 +27,8 @@ public class WaterLeakProcessStartService {
   public void startWaterLeakExam(MtdWaterLeakExamGroup group) {
     if (isReadyToStart(group)) {
       group.startExam();
-      MtdWaterLeakExamGroup savedGroup = groupRepository.save(group);
-      List<MtdWaterLeakExamWateruser> leakWaterUsers = leakWateruserRepository.findAllByExamGroup(savedGroup);
+      MtdWaterLeakExamGroup startedGroup = groupRepository.save(group);
+      List<MtdWaterLeakExamWateruser> leakWaterUsers = leakWateruserRepository.findAllByExamGroup(startedGroup);
       for (MtdWaterLeakExamWateruser leakWaterUser : leakWaterUsers) {
         ackNbiotRepository.delete(AckNbiot.builder().imei(leakWaterUser.getImei()).build());
       }

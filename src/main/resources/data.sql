@@ -334,6 +334,13 @@ INSERT INTO meterdataseoulnbiot (imei, imsi, metering_date, receiving_date, rssi
 /* ############################################################################################################################################ */
 
 /* 누수점검 종료 시점이 도래한 경우 */
+
+INSERT INTO mtd_nb_water_leak_exam_group (exam_group_idx, created_date, created_user, exam_finished_dt, exam_nm, exam_plan_start_dt, exam_started_dt, exam_status, group_sid)
+VALUES (51, '2022-11-17 14:02:00', '관리자', '2022-11-21 14:02:00', '누수점검종료_테스트_2', '2022-11-20 14:02:00', '2022-11-18 14:02:00', 'S', 6);
+INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (52, 55, null, '10', '864747533730534', null, 51);
+INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (53, 56, null, '10', '860997050890234', null, 51);
+INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (54, 57, null, '10', '864447058866774', null, 51);
+
 INSERT INTO mtd_nb_water_leak_exam_group (exam_group_idx, created_date, created_user, exam_finished_dt, exam_nm, exam_plan_start_dt, exam_started_dt, exam_status, group_sid)
 VALUES (41, '2022-11-17 14:02:00', '관리자', '2022-11-21 14:02:00', '누수점검종료_테스트', '2022-11-20 14:02:00', '2022-11-18 14:02:00', 'S', 6);
 INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (42, 45, null, '10', '864747540730534', null, 41);

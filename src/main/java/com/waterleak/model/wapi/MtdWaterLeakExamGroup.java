@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -65,6 +66,10 @@ public class MtdWaterLeakExamGroup {
 		this.examStatus = WATERLEAK_STATUS_START;
 		this.examStartedDt = LocalDateTime.now();
 		this.examFinishiedDt = LocalDateTime.now().plusDays(3);
+	}
+
+	public void finishExam() {
+		this.examStatus = WATERLEAK_STATUS_FINISH;
 	}
 
 	public void failExam() {
