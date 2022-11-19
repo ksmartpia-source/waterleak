@@ -1,4 +1,4 @@
-package com.waterleak.service;
+package com.waterleak.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.waterleak.WaterLeak;

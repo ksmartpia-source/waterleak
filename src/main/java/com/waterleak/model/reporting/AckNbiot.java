@@ -25,7 +25,7 @@ public class AckNbiot {
     private String nbInstruction;
 
     @CreatedDate
-    @Column(name = "INSERT_DATE", columnDefinition = "TIMESTAMP")
+    @Column(name = "INSERT_DATE", nullable = true, columnDefinition = "TIMESTAMP")
     private LocalDateTime insertDate;
 
     @Column(name = "UPDATE_DATE", nullable = true, updatable = true)

@@ -6,10 +6,13 @@
 create table ack_nbiot
 (
     imei           varchar(50)                        not null primary key,
-    nb_instruction varchar(50)                        not null,
-    insert_date    datetime default CURRENT_TIMESTAMP not null,
-    update_date    datetime null
+    nb_instruction varchar(50)                        null,
+    insert_date    datetime                           null,
+    update_date    datetime                           null
 );
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('890123456712345', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('890123456712346', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('890123456712347', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
 
 create table meterdataseoulnbiot
 (
@@ -90,11 +93,6 @@ INSERT INTO meterdataseoulnbiot (imei, imsi, metering_date, receiving_date, rssi
 INSERT INTO meterdataseoulnbiot (imei, imsi, metering_date, receiving_date, rssi, ber, cid, rsrp, rsrq, snr, modem_serial, modem_fwversion, modem_battery, meter_serial, meter_type, meter_size, meter_status_overload, meter_status_leaked, meter_status_reversed, meter_status_battery, metering_interval, reporting_interval, metering_value, modem_temp, insert_date, update_date) VALUES ('864447051283958','450061236858679','2022-11-17 6:36','2022-11-17 6:36','-77','0','3357','-830','-100','-170','2207007329','2.3','3.6','21513453','1','20','0','0','0','0','1','6','187.498','19','2022-11-16 21:26','2022-11-16 21:26');
 INSERT INTO meterdataseoulnbiot (imei, imsi, metering_date, receiving_date, rssi, ber, cid, rsrp, rsrq, snr, modem_serial, modem_fwversion, modem_battery, meter_serial, meter_type, meter_size, meter_status_overload, meter_status_leaked, meter_status_reversed, meter_status_battery, metering_interval, reporting_interval, metering_value, modem_temp, insert_date, update_date) VALUES ('864447051283958','450061236858679','2022-11-17 6:26','2022-11-17 6:26','-76','0','3357','-820','-100','-160','2207007329','2.3','3.6','21513453','1','20','0','0','0','0','1','6','187.481','18.8','2022-11-16 15:26','2022-11-16 15:26');
 INSERT INTO meterdataseoulnbiot (imei, imsi, metering_date, receiving_date, rssi, ber, cid, rsrp, rsrq, snr, modem_serial, modem_fwversion, modem_battery, meter_serial, meter_type, meter_size, meter_status_overload, meter_status_leaked, meter_status_reversed, meter_status_battery, metering_interval, reporting_interval, metering_value, modem_temp, insert_date, update_date) VALUES ('864447051283958','450061236858679','2022-11-17 6:16','2022-11-17 6:16','-76','0','3357','-820','-100','-160','2207007329','2.3','3.6','21513453','1','20','0','0','0','0','1','6','187.444','18.9','2022-11-16 15:26','2022-11-16 15:26');
-
-
-
-
-
 
 /*
 #############
