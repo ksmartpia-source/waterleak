@@ -335,10 +335,10 @@ INSERT INTO meterdataseoulnbiot (imei, imsi, metering_date, receiving_date, rssi
 
 /* 누수점검 종료 시점이 도래한 경우 */
 INSERT INTO mtd_nb_water_leak_exam_group (exam_group_idx, created_date, created_user, exam_finished_dt, exam_nm, exam_plan_start_dt, exam_started_dt, exam_status, group_sid)
-VALUES (31, '2022-11-17 14:02:00', '관리자', '2022-11-21 14:02:00', '누수점검종료_테스트', '2022-11-20 14:02:00', '2022-11-18 14:02:00', 'S', 6);
-INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (31, 34, null, '10', '864747540730534', null, 31);
-INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (32, 35, null, '10', '860007050890234', null, 31);
-INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (33, 36, null, '10', '864447058887774', null, 31);
+VALUES (41, '2022-11-17 14:02:00', '관리자', '2022-11-21 14:02:00', '누수점검종료_테스트', '2022-11-20 14:02:00', '2022-11-18 14:02:00', 'S', 6);
+INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (42, 45, null, '10', '864747540730534', null, 41);
+INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (43, 46, null, '10', '860007050890234', null, 41);
+INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (44, 47, null, '10', '864447058887774', null, 41);
 
 /* 누수점검 완료 예정 데이터 */
 INSERT INTO meterdataseoulnbiot (imei, imsi, metering_date, receiving_date, rssi, ber, cid, rsrp, rsrq, snr, modem_serial, modem_fwversion, modem_battery, meter_serial, meter_type, meter_size, meter_status_overload, meter_status_leaked, meter_status_reversed, meter_status_battery, metering_interval, reporting_interval, metering_value, modem_temp, insert_date, update_date) VALUES ('864747540730534','450061236538913','2022-11-18 18:49','2022-11-18 10:49','-90','0','12827','-960','-100','-160','2204008805','2.3','3.6','21523523','1','20','0','0','0','0','1','6','18.664','12.7','2022-11-18 10:49','2022-11-18 10:49');
