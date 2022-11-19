@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class WaterLeakProcessService {
-
   private final MtdWaterLeakExamGroupRepository groupRepository;
   private final MtdWaterLeakExamWateruserRepository leakWateruserRepository;
   private final MeterDataSeoulNbiotRepository seoulNbiotRepository;
@@ -39,39 +38,43 @@ public class WaterLeakProcessService {
   public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
     int changeUsers = 0;
     List<MtdWaterLeakExamWateruser> leakers = leakWateruserRepository.findAllByExamGroup(group);
-
     for (MtdWaterLeakExamWateruser leaker : leakers) {
       if (isCycleChangeVerification(leaker.getImei(), Globals.CYCLE_10_MIN)) {
         leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_10);
         changeUsers++;
       }
     }
-
     if (changeUsers == leakers.size()) {
       return true;
     }
-
     if (changeUsers == 0) {
-      for (MtdWaterLeakExamWateruser leaker : leakers) {
-        leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_FAIL);
-      }
-      group.failExam();
-      groupRepository.save(group);
+      allChangeFails(group, leakers);
       return false;
     }
-
     if (changeUsers < leakers.size()) {
       if (LocalDateTime.now().isAfter(group.getExamPlanStartDt()) && leakers.size() > 0) {
-        for (MtdWaterLeakExamWateruser leaker : leakers) {
-          if (Objects.isNull(leaker.getChangeStatus()) ||
-              !leaker.getChangeStatus().equals(Globals.WATERLEAK_STATUS_CHANGE_10)) {
-            leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_FAIL);
-          }
-        }
+        someChangeFails(leakers);
         return true;
       }
     }
     return false;
+  }
+
+  private void someChangeFails(List<MtdWaterLeakExamWateruser> leakers) {
+    for (MtdWaterLeakExamWateruser leaker : leakers) {
+      if (Objects.isNull(leaker.getChangeStatus()) ||
+          !leaker.getChangeStatus().equals(Globals.WATERLEAK_STATUS_CHANGE_10)) {
+        leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_FAIL);
+      }
+    }
+  }
+
+  private void allChangeFails(MtdWaterLeakExamGroup group, List<MtdWaterLeakExamWateruser> leakers) {
+    for (MtdWaterLeakExamWateruser leaker : leakers) {
+      leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_FAIL);
+    }
+    group.failExam();
+    groupRepository.save(group);
   }
 
   public boolean isCycleChangeVerification(String imei, Long cycle) {
