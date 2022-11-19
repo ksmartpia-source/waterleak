@@ -1,6 +1,7 @@
 package com.waterleak.model.wapi;
 
 import com.waterleak.model.wapi.id.MtdMeterinfoLeakPK;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -81,4 +82,33 @@ public class MtdMeterinfoLeak implements Serializable {
 	
 	@Column(name = "GROUP_SID")
 	private Long groupSid;
+
+	@Builder
+	public MtdMeterinfoLeak(Long examWateruserIdx, String imei, Timestamp meteringDate,
+			Timestamp receivingDate, BigDecimal meteringValue, BigDecimal meteringUsage,
+			String meteringState, int meteringSignal01, int meteringSignal02, int meteringSignal03,
+			int meteringSignal04, int modemRssi, int modemSignal01, int modemSignal02, int modemSignal03,
+			String infoTag, int acubeSignal01, int acubeSignal02, Date criterionDate,
+			Long groupSid) {
+		this.examWateruserIdx = examWateruserIdx;
+		this.imei = imei;
+		this.meteringDate = meteringDate;
+		this.receivingDate = receivingDate;
+		this.meteringValue = meteringValue;
+		this.meteringUsage = meteringUsage;
+		this.meteringState = meteringState;
+		this.meteringSignal01 = meteringSignal01;
+		this.meteringSignal02 = meteringSignal02;
+		this.meteringSignal03 = meteringSignal03;
+		this.meteringSignal04 = meteringSignal04;
+		this.modemRssi = modemRssi;
+		this.modemSignal01 = modemSignal01;
+		this.modemSignal02 = modemSignal02;
+		this.modemSignal03 = modemSignal03;
+		this.infoTag = infoTag;
+		this.acubeSignal01 = acubeSignal01;
+		this.acubeSignal02 = acubeSignal02;
+		this.criterionDate = criterionDate;
+		this.groupSid = groupSid;
+	}
 }
