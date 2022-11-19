@@ -23,7 +23,7 @@ public class WaterLeakProcessFinsihTest {
     @Autowired private MtdWaterLeakExamWateruserRepository wateruserRepository;
     @Autowired private AckNbiotRepository ackNbiotRepository;
     @Autowired private MeterDataSeoulNbiotRepository seoulNbiotRepository;
-    @Autowired private WaterLeakProcessService leakProcessService;
+    @Autowired private WaterLeakProcessStartService leakProcessService;
 
     @Test
     @Transactional
