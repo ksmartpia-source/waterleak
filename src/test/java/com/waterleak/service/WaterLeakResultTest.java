@@ -1,10 +1,15 @@
 package com.waterleak.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import com.waterleak.WaterLeak;
 import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.dao.wapi.MtdMeterinfoLeakRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
+import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
+import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +25,22 @@ import org.springframework.transaction.annotation.Transactional;
 @ActiveProfiles("dev")
 public class WaterLeakResultTest {
     @Autowired private MtdWaterLeakExamGroupRepository groupRepository;
-    @Autowired private MtdWaterLeakExamWateruserRepository wateruserRepository;
+    @Autowired private MtdWaterLeakExamWateruserRepository leakExamWateruserRepository;
     @Autowired private MeterDataSeoulNbiotRepository seoulNbiotRepository;
     @Autowired private MtdMeterinfoLeakRepository meterinfoLeakRepository;
+    @Autowired private WaterLeakResultService resultService;
 
     @Test
     @Transactional
     public void 누수점검_결론_도출() {
+        long examWateruserIdx = 0L;
+        resultService.decision(examWateruserIdx);
+
+        Optional<MtdWaterLeakExamWateruser> byId = leakExamWateruserRepository
+            .findById(examWateruserIdx);
+        assertEquals(true, byId.isPresent());
+        MtdWaterLeakExamWateruser finishedLeaker = byId.get();
+        assertNotNull(finishedLeaker.getExamResult());
+        assertNotNull(finishedLeaker.getLeakMinUsage());
     }
 }
