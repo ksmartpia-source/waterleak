@@ -4,10 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.waterleak.WaterLeak;
 import com.waterleak.config.Globals;
-import com.waterleak.dao.reporting.AckNbiotRepository;
-import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
-import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
-import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
+import com.waterleak.utils.WaterLeakChangeVerification;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @EnableTransactionManagement
 @ActiveProfiles("dev")
 public class WaterLeakChangeCycleTest {
-    @Autowired private MtdWaterLeakExamGroupRepository groupRepository;
-    @Autowired private MtdWaterLeakExamWateruserRepository wateruserRepository;
-    @Autowired private AckNbiotRepository ackNbiotRepository;
-    @Autowired private MeterDataSeoulNbiotRepository seoulNbiotRepository;
-    @Autowired private WaterLeakProcessService leakProcessService;
+    @Autowired private WaterLeakChangeVerification changeVerification;
 
     @Test
     @Transactional
@@ -34,7 +27,7 @@ public class WaterLeakChangeCycleTest {
         //given
         String tenMinIMEI = "864447051283958";
         //when
-        Boolean result = leakProcessService.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_10_MIN);
+        Boolean result = changeVerification.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_10_MIN);
         //then
         assertEquals(true, result);
     }
@@ -45,7 +38,7 @@ public class WaterLeakChangeCycleTest {
         //given
         String tenMinIMEI = "864700040744484";
         //when
-        Boolean result = leakProcessService.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_60_MIN);
+        Boolean result = changeVerification.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_60_MIN);
         //then
         assertEquals(true, result);
     }
