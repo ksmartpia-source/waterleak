@@ -57,6 +57,10 @@ public class MtdWaterLeakExamGroup {
 		this.examPlanStartDt = examPlanStartDt;
 	}
 
+	public void updateExamFinishiedDt(LocalDateTime examFinishiedDt) {
+		this.examFinishiedDt = examFinishiedDt;
+	}
+
 	public void startExam() {
 		this.examStatus = WATERLEAK_STATUS_START;
 		this.examStartedDt = LocalDateTime.now();

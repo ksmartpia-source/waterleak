@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import com.waterleak.WaterLeak;
 import com.waterleak.config.Globals;
 import com.waterleak.dao.reporting.AckNbiotRepository;
-import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import com.waterleak.model.reporting.AckNbiot;
@@ -33,7 +32,6 @@ public class WaterLeakProcessStartTest {
     @Autowired private MtdWaterLeakExamGroupRepository groupRepository;
     @Autowired private MtdWaterLeakExamWateruserRepository wateruserRepository;
     @Autowired private AckNbiotRepository ackNbiotRepository;
-    @Autowired private MeterDataSeoulNbiotRepository seoulNbiotRepository;
     @Autowired private WaterLeakProcessStartService startService;
 
     @Test
