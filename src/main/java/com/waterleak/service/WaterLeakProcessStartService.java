@@ -1,7 +1,6 @@
 package com.waterleak.service;
 
 import com.waterleak.config.Globals;
-import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
@@ -16,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class WaterLeakProcessService {
+public class WaterLeakProcessStartService {
   private final MtdWaterLeakExamGroupRepository groupRepository;
   private final MtdWaterLeakExamWateruserRepository leakWateruserRepository;
   private final WaterLeakChangeVerification changeVerification;
@@ -70,6 +69,5 @@ public class WaterLeakProcessService {
     group.failExam();
     groupRepository.save(group);
   }
-
 }
 
