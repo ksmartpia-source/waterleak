@@ -19,27 +19,38 @@ import org.springframework.transaction.annotation.Transactional;
 @EnableTransactionManagement
 @ActiveProfiles("dev")
 public class WaterLeakChangeCycleTest {
-    @Autowired private WaterLeakChangeVerification changeVerification;
+  @Autowired
+  private WaterLeakChangeVerification changeVerification;
 
-    @Test
-    @Transactional
-    public void 주기변경_10분_검증_테스트() {
-        //given
-        String tenMinIMEI = "864447051283958";
-        //when
-        Boolean result = changeVerification.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_10_MIN);
-        //then
-        assertEquals(true, result);
-    }
+  @Test
+  @Transactional
+  public void 주기변경_10분_검증_테스트() {
+    //given
+    String tenMinIMEI = "864447051283958";
+    //when
+    Boolean result = changeVerification.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_10_MIN);
+    //then
+    assertEquals(true, result);
+  }
 
-    @Test
-    @Transactional
-    public void 주기변경_60분_검증_테스트() {
-        //given
-        String tenMinIMEI = "864700040744484";
-        //when
-        Boolean result = changeVerification.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_60_MIN);
-        //then
-        assertEquals(true, result);
-    }
+  @Test
+  @Transactional
+  public void 주기변경_60분_검증_테스트() {
+    //given
+    String tenMinIMEI = "864700040744484";
+    //when
+    Boolean result = changeVerification.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_60_MIN);
+    //then
+    assertEquals(true, result);
+  }
+
+  @Test
+  @Transactional
+  public void 일부_단말기의_60분_주기변경실패시_로직_테스트() {
+  }
+
+  @Test
+  @Transactional
+  public void 점검이완료된_수용가들의_60분_주기변경여부확인_테스트() {
+  }
 }

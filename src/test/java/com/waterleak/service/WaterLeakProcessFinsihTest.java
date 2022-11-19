@@ -63,5 +63,4 @@ public class WaterLeakProcessFinsihTest {
       assertEquals(Globals.NB_INSTRUCTION_TO_60, byId.get().getNbInstruction());
     }
   }
-
 }
