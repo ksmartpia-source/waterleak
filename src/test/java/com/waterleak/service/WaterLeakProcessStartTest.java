@@ -34,7 +34,7 @@ public class WaterLeakProcessStartTest {
     @Autowired private MtdWaterLeakExamWateruserRepository wateruserRepository;
     @Autowired private AckNbiotRepository ackNbiotRepository;
     @Autowired private MeterDataSeoulNbiotRepository seoulNbiotRepository;
-    @Autowired private WaterLeakProcessStartService leakProcessService;
+    @Autowired private WaterLeakProcessStartService startService;
 
     @Test
     @Transactional
@@ -49,7 +49,7 @@ public class WaterLeakProcessStartTest {
             assertEquals(true, byId.isPresent());
         }
 
-        leakProcessService.startWaterLeakExam(group);
+        startService.startWaterLeakExam(group);
 
         //then
         MtdWaterLeakExamGroup startedGroup = groupRepository.findById(1L).get();
@@ -71,7 +71,7 @@ public class WaterLeakProcessStartTest {
         //given
         MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
         //when
-        Boolean result = leakProcessService.isReadyToStart(group);
+        Boolean result = startService.isReadyToStart(group);
         //then
         assertEquals(true, result);
         MtdWaterLeakExamGroup savedGroup = groupRepository.findById(1L).get();
@@ -87,7 +87,7 @@ public class WaterLeakProcessStartTest {
         //given
         MtdWaterLeakExamGroup group = groupRepository.findById(11L).get();
         //when
-        Boolean result = leakProcessService.isReadyToStart(group);
+        Boolean result = startService.isReadyToStart(group);
         //then
         assertEquals(false, result);
         MtdWaterLeakExamGroup savedGroup = groupRepository.findById(11L).get();
@@ -108,7 +108,7 @@ public class WaterLeakProcessStartTest {
         MtdWaterLeakExamGroup group = groupRepository.findById(11L).get();
         group.updateExamPlanStartDt(LocalDateTime.now().minusDays(1L));
         //when
-        Boolean result = leakProcessService.isReadyToStart(group);
+        Boolean result = startService.isReadyToStart(group);
         //then
         assertEquals(true, result);
         MtdWaterLeakExamGroup savedGroup = groupRepository.findById(11L).get();
@@ -132,7 +132,7 @@ public class WaterLeakProcessStartTest {
         MtdWaterLeakExamGroup group = groupRepository.findById(21L).get();
         group.updateExamPlanStartDt(LocalDateTime.now().minusDays(1L));
         //when
-        Boolean result = leakProcessService.isReadyToStart(group);
+        Boolean result = startService.isReadyToStart(group);
         groupRepository.flush();
         //then
         assertEquals(false, result);

@@ -1,5 +1,6 @@
 package com.waterleak.model.wapi;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -41,8 +42,18 @@ public class MtdWaterLeakExamWateruser {
     public void updateChangeStatus(String changeStatus) {
         this.changeStatus = changeStatus;
     }
+
+    @Builder
+    public MtdWaterLeakExamWateruser(Long examWateruserIdx,
+        MtdWaterLeakExamGroup examGroup, Long consumerSid, String imei, String examResult,
+        String changeStatus, BigDecimal leakMinUsage, Long groupSid) {
+        this.examWateruserIdx = examWateruserIdx;
+        this.examGroup = examGroup;
+        this.consumerSid = consumerSid;
+        this.imei = imei;
+        this.examResult = examResult;
+        this.changeStatus = changeStatus;
+        this.leakMinUsage = leakMinUsage;
+        this.groupSid = groupSid;
+    }
 }
-
-
-
-

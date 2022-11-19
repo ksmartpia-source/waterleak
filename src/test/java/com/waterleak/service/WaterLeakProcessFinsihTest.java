@@ -1,10 +1,6 @@
 package com.waterleak.service;
 
 import com.waterleak.WaterLeak;
-import com.waterleak.dao.reporting.AckNbiotRepository;
-import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
-import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
-import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @EnableTransactionManagement
 @ActiveProfiles("dev")
 public class WaterLeakProcessFinsihTest {
-    @Autowired private MtdWaterLeakExamGroupRepository groupRepository;
-    @Autowired private MtdWaterLeakExamWateruserRepository wateruserRepository;
-    @Autowired private AckNbiotRepository ackNbiotRepository;
-    @Autowired private MeterDataSeoulNbiotRepository seoulNbiotRepository;
-    @Autowired private WaterLeakProcessStartService leakProcessService;
+    @Autowired private WaterLeakProcessFinishService finishService;
 
     @Test
     @Transactional

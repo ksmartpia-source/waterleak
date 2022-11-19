@@ -5,6 +5,7 @@ import static com.waterleak.config.Globals.WATERLEAK_STATUS_START;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -66,5 +67,23 @@ public class MtdWaterLeakExamGroup {
 		this.examStatus = WATERLEAK_STATUS_FINISH;
 		this.examStartedDt = LocalDateTime.now();
 		this.examFinishiedDt = LocalDateTime.now();
+	}
+
+	@Builder
+	public MtdWaterLeakExamGroup(Long examGroupIdx,
+			List<MtdWaterLeakExamWateruser> leakWaterUsers, String examNm,
+			LocalDateTime examPlanStartDt, LocalDateTime examStartedDt,
+			LocalDateTime examFinishiedDt, String examStatus, String createdUser,
+			Timestamp createdDate, Long groupSid) {
+		this.examGroupIdx = examGroupIdx;
+		this.leakWaterUsers = leakWaterUsers;
+		this.examNm = examNm;
+		this.examPlanStartDt = examPlanStartDt;
+		this.examStartedDt = examStartedDt;
+		this.examFinishiedDt = examFinishiedDt;
+		this.examStatus = examStatus;
+		this.createdUser = createdUser;
+		this.createdDate = createdDate;
+		this.groupSid = groupSid;
 	}
 }
