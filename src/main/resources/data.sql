@@ -10,9 +10,21 @@ create table ack_nbiot
     insert_date    datetime                           null,
     update_date    datetime                           null
 );
-INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('890123456712345', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
-INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('890123456712346', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
-INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('890123456712347', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('864700040744484', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('864447051283958', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('864700040730541', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('864447050890647', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('864447050007804', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('864700040730534', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('864447050890234', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('864447050007111', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('864799940730534', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('863337050890234', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
+INSERT INTO ack_nbiot (imei, nb_instruction, insert_date, update_date) VALUES ('864447058887111', 'QSDF', '2022-11-16 13:28:02', '2022-11-16 13:28:05');
 
 create table meterdataseoulnbiot
 (

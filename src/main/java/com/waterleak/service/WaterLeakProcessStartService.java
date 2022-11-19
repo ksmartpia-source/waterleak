@@ -1,8 +1,10 @@
 package com.waterleak.service;
 
 import com.waterleak.config.Globals;
+import com.waterleak.dao.reporting.AckNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
+import com.waterleak.model.reporting.AckNbiot;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
 import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
 import com.waterleak.utils.WaterLeakChangeVerification;
@@ -19,13 +21,18 @@ public class WaterLeakProcessStartService {
   private final MtdWaterLeakExamGroupRepository groupRepository;
   private final MtdWaterLeakExamWateruserRepository leakWateruserRepository;
   private final WaterLeakChangeVerification changeVerification;
+  private final AckNbiotRepository ackNbiotRepository;
 
   @Transactional
   public void startWaterLeakExam(MtdWaterLeakExamGroup group) {
     if (isReadyToStart(group)) {
       group.startExam();
+      MtdWaterLeakExamGroup savedGroup = groupRepository.save(group);
+      List<MtdWaterLeakExamWateruser> leakWaterUsers = leakWateruserRepository.findAllByExamGroup(savedGroup);
+      for (MtdWaterLeakExamWateruser leakWaterUser : leakWaterUsers) {
+        ackNbiotRepository.delete(AckNbiot.builder().imei(leakWaterUser.getImei()).build());
+      }
     }
-    groupRepository.save(group);
   }
 
   public Boolean isReadyToStart(MtdWaterLeakExamGroup group) {
@@ -62,7 +69,8 @@ public class WaterLeakProcessStartService {
     }
   }
 
-  private void allChangeFails(MtdWaterLeakExamGroup group, List<MtdWaterLeakExamWateruser> leakers) {
+  private void allChangeFails(MtdWaterLeakExamGroup group,
+      List<MtdWaterLeakExamWateruser> leakers) {
     for (MtdWaterLeakExamWateruser leaker : leakers) {
       leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_FAIL);
     }
@@ -70,4 +78,3 @@ public class WaterLeakProcessStartService {
     groupRepository.save(group);
   }
 }
-

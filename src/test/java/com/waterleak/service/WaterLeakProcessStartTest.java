@@ -10,10 +10,12 @@ import com.waterleak.dao.reporting.AckNbiotRepository;
 import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
+import com.waterleak.model.reporting.AckNbiot;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
 import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,13 +42,27 @@ public class WaterLeakProcessStartTest {
         //given
         MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
         //when
+        List<MtdWaterLeakExamWateruser> allByExamGroup = wateruserRepository
+            .findAllByExamGroup(group);
+        for (MtdWaterLeakExamWateruser beforeLeaker : allByExamGroup) {
+            Optional<AckNbiot> byId = ackNbiotRepository.findById(beforeLeaker.getImei());
+            assertEquals(true, byId.isPresent());
+        }
+
         leakProcessService.startWaterLeakExam(group);
+
         //then
         MtdWaterLeakExamGroup startedGroup = groupRepository.findById(1L).get();
         assertEquals(Globals.WATERLEAK_STATUS_START, startedGroup.getExamStatus());
         assertNotNull(startedGroup.getExamPlanStartDt());
         assertNotNull(startedGroup.getExamStartedDt());
         assertNotNull(startedGroup.getExamFinishiedDt());
+        List<MtdWaterLeakExamWateruser> leakers = wateruserRepository
+            .findAllByExamGroup(startedGroup);
+        for (MtdWaterLeakExamWateruser leaker : leakers) {
+            Optional<AckNbiot> byId = ackNbiotRepository.findById(leaker.getImei());
+            assertEquals(false, byId.isPresent());
+        }
     }
 
     @Test
