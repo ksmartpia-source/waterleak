@@ -44,23 +44,13 @@ public class WaterLeakResultServiceV1 implements WaterLeakResultService {
 
         int index = 0;
         for (MeterDataSeoulNbiot seoulNbiot : seoulNbiots) {
-            if(index == seoulNbiots.size() - 1) {
-                MtdMeterinfoLeak build = MtdMeterinfoLeak.builder()
-                    .imei(seoulNbiot.getImei())
-                    .meteringDate(seoulNbiot.getMeteringDate())
-                    .meteringValue(seoulNbiot.getMeteringValue())
-                    .meteringUsage(BigDecimal.valueOf(-1))
-                    .build();
-                leaks.add(build);
-            } else {
-                MtdMeterinfoLeak build = MtdMeterinfoLeak.builder()
-                    .imei(seoulNbiot.getImei())
-                    .meteringDate(seoulNbiot.getMeteringDate())
-                    .meteringValue(seoulNbiot.getMeteringValue())
-                    .meteringUsage(seoulNbiots.get(index).getMeteringValue().subtract(seoulNbiots.get(index+1).getMeteringValue()))
-                    .build();
-                leaks.add(build);
-            }
+            MtdMeterinfoLeak build = MtdMeterinfoLeak.builder()
+                .imei(seoulNbiot.getImei())
+                .meteringDate(seoulNbiot.getMeteringDate())
+                .meteringValue(seoulNbiot.getMeteringValue())
+                .meteringUsage(index == seoulNbiots.size() - 1 ? BigDecimal.valueOf(-1) : seoulNbiots.get(index).getMeteringValue().subtract(seoulNbiots.get(index + 1).getMeteringValue()))
+                .build();
+            leaks.add(build);
             index++;
         }
         return leaks;
