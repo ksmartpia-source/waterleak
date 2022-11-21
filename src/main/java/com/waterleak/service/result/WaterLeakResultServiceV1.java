@@ -1,4 +1,4 @@
-package com.waterleak.service;
+package com.waterleak.service.result;
 
 import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class WaterLeakResultService {
+public class WaterLeakResultServiceV1 implements WaterLeakResultService {
   private final MtdWaterLeakExamWateruserRepository leakExamWateruserRepository;
   private final MeterDataSeoulNbiotRepository seoulNbiotRepository;
 
+  @Override
   public void decision(long examWateruserIdx) {
     MtdWaterLeakExamWateruser leaker = leakExamWateruserRepository
         .findById(examWateruserIdx).get();

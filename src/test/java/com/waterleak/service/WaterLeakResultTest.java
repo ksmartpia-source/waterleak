@@ -10,6 +10,8 @@ import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
 import java.util.Optional;
+
+import com.waterleak.service.result.WaterLeakResultService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
