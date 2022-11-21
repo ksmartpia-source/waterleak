@@ -6,6 +6,7 @@ import com.waterleak.model.reporting.MeterDataSeoulNbiot;
 import com.waterleak.model.wapi.MtdMeterinfoLeak;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
 import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
+import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,29 @@ public class WaterLeakResultServiceV1 implements WaterLeakResultService {
     }
 
     public List<MtdMeterinfoLeak> calculateUsage(List<MeterDataSeoulNbiot> seoulNbiots) {
-        return null;
+        List<MtdMeterinfoLeak> leaks = new ArrayList<>();
+
+        int index = 0;
+        for (MeterDataSeoulNbiot seoulNbiot : seoulNbiots) {
+            if(index == seoulNbiots.size() - 1) {
+                MtdMeterinfoLeak build = MtdMeterinfoLeak.builder()
+                    .imei(seoulNbiot.getImei())
+                    .meteringDate(seoulNbiot.getMeteringDate())
+                    .meteringValue(seoulNbiot.getMeteringValue())
+                    .meteringUsage(BigDecimal.valueOf(-1))
+                    .build();
+                leaks.add(build);
+            } else {
+                MtdMeterinfoLeak build = MtdMeterinfoLeak.builder()
+                    .imei(seoulNbiot.getImei())
+                    .meteringDate(seoulNbiot.getMeteringDate())
+                    .meteringValue(seoulNbiot.getMeteringValue())
+                    .meteringUsage(seoulNbiots.get(index).getMeteringValue().subtract(seoulNbiots.get(index+1).getMeteringValue()))
+                    .build();
+                leaks.add(build);
+            }
+            index++;
+        }
+        return leaks;
     }
 }
