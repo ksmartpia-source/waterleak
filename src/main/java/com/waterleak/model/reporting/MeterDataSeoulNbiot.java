@@ -2,6 +2,7 @@ package com.waterleak.model.reporting;
 
 import com.waterleak.model.reporting.id.MeterDataSeoulNbiotPK;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,11 +31,11 @@ public class MeterDataSeoulNbiot implements Serializable {
     private String imsi;
 
     @Column(name = "METERING_VALUE")
-    private Double meteringValue;
+    private BigDecimal meteringValue;
 
     @Builder
     public MeterDataSeoulNbiot(String imei, Timestamp meteringDate, String imsi,
-        Double meteringValue) {
+        BigDecimal meteringValue) {
         this.imei = imei;
         this.meteringDate = meteringDate;
         this.imsi = imsi;
