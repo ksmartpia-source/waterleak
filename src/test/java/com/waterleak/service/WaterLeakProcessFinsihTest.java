@@ -63,4 +63,10 @@ public class WaterLeakProcessFinsihTest {
       assertEquals(Globals.NB_INSTRUCTION_TO_60, byId.get().getNbInstruction());
     }
   }
+
+  @Test
+  @Transactional
+  public void 점검이완료된_수용가들의_60분_주기변경여부확인_테스트() {
+
+  }
 }

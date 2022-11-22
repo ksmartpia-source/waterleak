@@ -48,9 +48,4 @@ public class WaterLeakChangeCycleTest {
   @Transactional
   public void 일부_단말기의_60분_주기변경실패시_로직_테스트() {
   }
-
-  @Test
-  @Transactional
-  public void 점검이완료된_수용가들의_60분_주기변경여부확인_테스트() {
-  }
 }
