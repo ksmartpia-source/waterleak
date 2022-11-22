@@ -1,17 +1,13 @@
 package com.waterleak.model.wapi;
 
-import static com.waterleak.config.Globals.RESULT_MIDDLE_COUNT;
-import static com.waterleak.config.Globals.RESULT_UPPER_COUNT;
-import static com.waterleak.config.Globals.WATERLEAK_RESULT_FINE_LEAK;
-import static com.waterleak.config.Globals.WATERLEAK_RESULT_LEAK;
-import static com.waterleak.config.Globals.WATERLEAK_RESULT_NORMAL;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+
+import static com.waterleak.config.Globals.*;
 
 @Getter
 @NoArgsConstructor
@@ -50,9 +46,11 @@ public class MtdWaterLeakExamWateruser {
     }
 
     @Builder
-    public MtdWaterLeakExamWateruser(Long examWateruserIdx,
-        MtdWaterLeakExamGroup examGroup, Long consumerSid, String imei, String examResult,
-        String changeStatus, BigDecimal leakMinUsage, Long groupSid) {
+    public MtdWaterLeakExamWateruser(
+            Long examWateruserIdx,
+            MtdWaterLeakExamGroup examGroup, Long consumerSid, String imei, String examResult,
+            String changeStatus, BigDecimal leakMinUsage, Long groupSid
+    ) {
         this.examWateruserIdx = examWateruserIdx;
         this.examGroup = examGroup;
         this.consumerSid = consumerSid;
@@ -63,15 +61,14 @@ public class MtdWaterLeakExamWateruser {
         this.groupSid = groupSid;
     }
 
-    public MtdWaterLeakExamWateruser saveResultData(int leakCount, BigDecimal leakMinUsage) {
-        if(leakCount <= RESULT_MIDDLE_COUNT) {
+    public void determinResult(int leakCount, BigDecimal leakMinUsage) {
+        if (leakCount <= RESULT_MIDDLE_COUNT) {
             this.examResult = WATERLEAK_RESULT_LEAK;
-        } else if(leakCount <= RESULT_UPPER_COUNT) {
+        } else if (leakCount <= RESULT_UPPER_COUNT) {
             this.examResult = WATERLEAK_RESULT_FINE_LEAK;
         } else {
             this.examResult = WATERLEAK_RESULT_NORMAL;
         }
-        this.leakMinUsage = leakMinUsage;
-        return this;
+        this.leakMinUsage = leakMinUsage.multiply(BigDecimal.valueOf(6));
     }
 }
