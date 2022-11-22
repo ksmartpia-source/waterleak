@@ -1,20 +1,18 @@
 package com.waterleak.model.wapi;
 
-import static com.waterleak.config.Globals.WATERLEAK_STATUS_FINISH;
-import static com.waterleak.config.Globals.WATERLEAK_STATUS_START;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.waterleak.config.Globals.WATERLEAK_STATUS_FINISH;
+import static com.waterleak.config.Globals.WATERLEAK_STATUS_START;
 
 @Getter
 @NoArgsConstructor
@@ -60,6 +58,14 @@ public class MtdWaterLeakExamGroup {
 
 	public void updateExamFinishiedDt(LocalDateTime examFinishiedDt) {
 		this.examFinishiedDt = examFinishiedDt;
+	}
+
+	public Timestamp getExamStartedTimeStampDt(){
+		return Timestamp.valueOf(this.examStartedDt);
+	}
+
+	public Timestamp getExamFinishedTimeStampDt(){
+		return Timestamp.valueOf(this.examFinishiedDt);
 	}
 
 	public void startExam() {

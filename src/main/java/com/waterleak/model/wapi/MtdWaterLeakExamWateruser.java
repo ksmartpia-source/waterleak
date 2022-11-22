@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
+import static com.waterleak.config.Globals.*;
+
 @Getter
 @NoArgsConstructor
 @Table(name = "MTD_NB_WATER_LEAK_EXAM_WATERUSER")
@@ -14,7 +16,7 @@ import java.math.BigDecimal;
 public class MtdWaterLeakExamWateruser {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "exam_wateruser_idx", length = 20)
+    @Column(name = "EXAM_WATERUSER_IDX", length = 20)
     private Long examWateruserIdx;
 
     @ManyToOne
@@ -44,9 +46,11 @@ public class MtdWaterLeakExamWateruser {
     }
 
     @Builder
-    public MtdWaterLeakExamWateruser(Long examWateruserIdx,
-        MtdWaterLeakExamGroup examGroup, Long consumerSid, String imei, String examResult,
-        String changeStatus, BigDecimal leakMinUsage, Long groupSid) {
+    public MtdWaterLeakExamWateruser(
+            Long examWateruserIdx,
+            MtdWaterLeakExamGroup examGroup, Long consumerSid, String imei, String examResult,
+            String changeStatus, BigDecimal leakMinUsage, Long groupSid
+    ) {
         this.examWateruserIdx = examWateruserIdx;
         this.examGroup = examGroup;
         this.consumerSid = consumerSid;
@@ -55,5 +59,16 @@ public class MtdWaterLeakExamWateruser {
         this.changeStatus = changeStatus;
         this.leakMinUsage = leakMinUsage;
         this.groupSid = groupSid;
+    }
+
+    public void determinResult(int leakCount, BigDecimal leakMinUsage) {
+        if (leakCount <= RESULT_MIDDLE_COUNT) {
+            this.examResult = WATERLEAK_RESULT_LEAK;
+        } else if (leakCount <= RESULT_UPPER_COUNT) {
+            this.examResult = WATERLEAK_RESULT_FINE_LEAK;
+        } else {
+            this.examResult = WATERLEAK_RESULT_NORMAL;
+        }
+        this.leakMinUsage = leakMinUsage.multiply(BigDecimal.valueOf(6));
     }
 }

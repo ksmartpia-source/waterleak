@@ -83,7 +83,7 @@ public class MtdMeterinfoLeak implements Serializable {
 	@Column(name = "criterion_date")
 	private Date criterionDate;
 	
-	@Column(name = "GROUP_SID")
+	@Column(name = "group_Sid")
 	private Long groupSid;
 
 	@Builder
