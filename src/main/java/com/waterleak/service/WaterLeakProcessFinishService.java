@@ -24,7 +24,6 @@ public class WaterLeakProcessFinishService {
     private final AckNbiotRepository ackNbiotRepository;
     private final WaterLeakResultService resultService;
 
-
     @Transactional
     public void finishWaterLeakExam(MtdWaterLeakExamGroup group) {
         if (isReadyToFinish(group)) {
