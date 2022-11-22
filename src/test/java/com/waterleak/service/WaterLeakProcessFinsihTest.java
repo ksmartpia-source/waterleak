@@ -1,6 +1,8 @@
 package com.waterleak.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.waterleak.WaterLeak;
@@ -32,6 +34,7 @@ public class WaterLeakProcessFinsihTest {
   @Autowired private MtdWaterLeakExamWateruserRepository leakWateruserRepository;
   @Autowired private WaterLeakProcessFinishService finishService;
   @Autowired private AckNbiotRepository ackNbiotRepository;
+  @Autowired private WaterLeakFinishAfterService finishAfterService;
 
   @Test
   @Transactional
@@ -67,6 +70,10 @@ public class WaterLeakProcessFinsihTest {
   @Test
   @Transactional
   public void 점검이완료된_수용가들의_60분_주기변경여부확인_테스트() {
-
+    //when
+    finishAfterService.restorationAfterWaterLeakExam();
+    //then
+    Optional<AckNbiot> byId = ackNbiotRepository.findById("864447051301461");
+    assertFalse(byId.isPresent());
   }
 }
