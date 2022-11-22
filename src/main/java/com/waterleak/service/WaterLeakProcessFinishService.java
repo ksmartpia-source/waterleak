@@ -1,20 +1,20 @@
 package com.waterleak.service;
 
-import com.waterleak.config.Globals;
 import com.waterleak.dao.reporting.AckNbiotRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import com.waterleak.model.reporting.AckNbiot;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
 import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
 import com.waterleak.service.result.WaterLeakResultService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static com.waterleak.config.Globals.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,8 +34,10 @@ public class WaterLeakProcessFinishService {
                 AckNbiot to60Instruction = AckNbiot
                         .builder()
                         .imei(leakWaterUser.getImei())
-                        .nbInstruction(Globals.NB_INSTRUCTION_TO_60)
+                        .nbInstruction(NB_INSTRUCTION_TO_60)
                         .build();
+                leakWaterUser.updateChangeStatus(WATERLEAK_STATUS_CHANGE_60);
+                leakWateruserRepository.save(leakWaterUser);
                 ackNbiotRepository.save(to60Instruction);
                 resultService.decision(group, leakWaterUser.getExamWateruserIdx());
             }
@@ -44,7 +46,7 @@ public class WaterLeakProcessFinishService {
 
     public Boolean isReadyToFinish(MtdWaterLeakExamGroup group) {
         if (LocalDateTime.now().isAfter(group.getExamFinishiedDt())
-                && group.getExamStatus().equals(Globals.WATERLEAK_STATUS_START)) {
+                && group.getExamStatus().equals(WATERLEAK_STATUS_START)) {
             return true;
         }
         return false;
