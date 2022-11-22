@@ -18,7 +18,11 @@ public class Globals {
     public static final Long CYCLE_10_MIN = 10L;
     public static final Long CYCLE_60_MIN = 60L;
 
+    //누수점검 도출 관련
+    public static final int RESULT_UPPER_COUNT = 6;
+    public static final int RESULT_MIDDLE_COUNT = 3;
 
+    //단말기에 전송할 누수점검 명령어
     public static final String NB_INSTRUCTION_TO_10 = "ZZZ";
     public static final String NB_INSTRUCTION_TO_60 = "QQQ";
 
