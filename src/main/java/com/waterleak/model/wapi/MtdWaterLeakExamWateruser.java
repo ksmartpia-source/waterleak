@@ -1,5 +1,11 @@
 package com.waterleak.model.wapi;
 
+import static com.waterleak.config.Globals.RESULT_MIDDLE_COUNT;
+import static com.waterleak.config.Globals.RESULT_UPPER_COUNT;
+import static com.waterleak.config.Globals.WATERLEAK_RESULT_FINE_LEAK;
+import static com.waterleak.config.Globals.WATERLEAK_RESULT_LEAK;
+import static com.waterleak.config.Globals.WATERLEAK_RESULT_NORMAL;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -55,5 +61,17 @@ public class MtdWaterLeakExamWateruser {
         this.changeStatus = changeStatus;
         this.leakMinUsage = leakMinUsage;
         this.groupSid = groupSid;
+    }
+
+    public MtdWaterLeakExamWateruser saveResultData(int leakCount, BigDecimal leakMinUsage) {
+        if(leakCount <= RESULT_MIDDLE_COUNT) {
+            this.examResult = WATERLEAK_RESULT_LEAK;
+        } else if(leakCount <= RESULT_UPPER_COUNT) {
+            this.examResult = WATERLEAK_RESULT_FINE_LEAK;
+        } else {
+            this.examResult = WATERLEAK_RESULT_NORMAL;
+        }
+        this.leakMinUsage = leakMinUsage;
+        return this;
     }
 }

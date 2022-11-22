@@ -7,15 +7,12 @@ import com.waterleak.model.reporting.MeterDataSeoulNbiot;
 import com.waterleak.model.wapi.MtdMeterinfoLeak;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
 import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
-
 import java.math.BigDecimal;
-
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -34,11 +31,23 @@ public class WaterLeakResultServiceV1 implements WaterLeakResultService {
                         group.getExamStartedTimeStampDt(),
                         group.getExamFinishedTimeStampDt());
         List<MtdMeterinfoLeak> savedMeterInfoLeaks = calculateUsages(seoulNbiots);
-        determin(savedMeterInfoLeaks, leaker);
+        determine(savedMeterInfoLeaks, leaker);
     }
 
-    private void determin(List<MtdMeterinfoLeak> savedMeterInfoLeaks, MtdWaterLeakExamWateruser leaker) {
-
+    private void determine(List<MtdMeterinfoLeak> savedMeterInfoLeaks, MtdWaterLeakExamWateruser leaker) {
+        int leakCount = 0;
+        BigDecimal leakMinUsage = BigDecimal.valueOf(Integer.MAX_VALUE);
+        BigDecimal zero = BigDecimal.ZERO;
+        for (MtdMeterinfoLeak savedMeterInfoLeak : savedMeterInfoLeaks) {
+            if(zero.equals(savedMeterInfoLeak.getMeteringUsage())) {
+                leakCount++;
+            }
+            if (savedMeterInfoLeak.getMeteringUsage().compareTo(zero) > 0
+                && savedMeterInfoLeak.getMeteringUsage().compareTo(leakMinUsage) < 0) {
+                leakMinUsage = savedMeterInfoLeak.getMeteringUsage();
+            }
+        }
+        leakExamWateruserRepository.save(leaker.saveResultData(leakCount, leakMinUsage.multiply(BigDecimal.valueOf(6))));
     }
 
     public List<MtdMeterinfoLeak> calculateUsages(List<MeterDataSeoulNbiot> seoulNbiots) {
