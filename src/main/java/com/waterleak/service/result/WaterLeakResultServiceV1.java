@@ -40,7 +40,7 @@ public class WaterLeakResultServiceV1 implements WaterLeakResultService {
         BigDecimal leakMinUsage = BigDecimal.valueOf(Integer.MAX_VALUE);
         BigDecimal zero = BigDecimal.ZERO;
         for (MtdMeterinfoLeak savedMeterInfoLeak : savedMeterInfoLeaks) {
-            if (zero.equals(savedMeterInfoLeak.getMeteringUsage())) {
+            if (zero.compareTo(savedMeterInfoLeak.getMeteringUsage()) == 0) {
                 leakCount++;
             }
             if (savedMeterInfoLeak.getMeteringUsage().compareTo(zero) > 0
