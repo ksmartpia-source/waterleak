@@ -46,6 +46,7 @@ public class WaterLeakResultServiceV1 implements WaterLeakResultService {
         int index = 0;
         for (MeterDataSeoulNbiot seoulNbiot : seoulNbiots) {
             MtdMeterinfoLeak meterinfoLeak = MtdMeterinfoLeak.builder()
+                    .groupSid(6L)
                     .imei(seoulNbiot.getImei())
                     .meteringDate(seoulNbiot.getMeteringDate())
                     .meteringValue(seoulNbiot.getMeteringValue())

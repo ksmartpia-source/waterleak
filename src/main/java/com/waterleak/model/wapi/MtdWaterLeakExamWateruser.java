@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class MtdWaterLeakExamWateruser {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "exam_wateruser_idx", length = 20)
+    @Column(name = "EXAM_WATERUSER_IDX", length = 20)
     private Long examWateruserIdx;
 
     @ManyToOne

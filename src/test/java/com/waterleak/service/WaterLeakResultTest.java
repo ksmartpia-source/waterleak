@@ -6,7 +6,6 @@ import com.waterleak.dao.wapi.MtdMeterinfoLeakRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
-import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
 import com.waterleak.service.result.WaterLeakResultService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,9 +17,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = WaterLeak.class)
@@ -47,4 +43,5 @@ public class WaterLeakResultTest {
 //        assertNotNull(finishedLeaker.getExamResult());
 //        assertNotNull(finishedLeaker.getLeakMinUsage());
     }
+
 }

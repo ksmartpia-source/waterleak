@@ -140,8 +140,6 @@ create table mtd_nb_water_leak_exam_wateruser
 
 create table mtd_nb_meterinfo_leak
 (
-    id bigint not null
-        primary key,
     acube_signal01 int null,
     acube_signal02 int null,
     criterion_date datetime null,
