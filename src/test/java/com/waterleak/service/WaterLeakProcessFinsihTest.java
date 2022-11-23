@@ -74,4 +74,14 @@ public class WaterLeakProcessFinsihTest {
         Optional<AckNbiot> byId = ackNbiotRepository.findById("864447051301461");
         assertFalse(byId.isPresent());
     }
+
+    @Test
+    @Transactional
+    public void 일부_단말기의_60분_주기변경실패시_로직_테스트() {
+        //when
+        finishAfterService.restorationAfterWaterLeakExam();
+        //then
+        Optional<AckNbiot> byId = ackNbiotRepository.findById("864447050807401");
+        assertTrue(byId.isPresent());
+    }
 }
