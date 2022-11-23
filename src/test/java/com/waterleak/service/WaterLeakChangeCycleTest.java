@@ -35,6 +35,17 @@ public class WaterLeakChangeCycleTest {
 
   @Test
   @Transactional
+  public void 주기변경_10분_검증_테스트_실패() {
+    //given
+    String tenMinIMEI = "864447058887111";
+    //when
+    Boolean result = changeVerification.isCycleChangeVerification(tenMinIMEI, Globals.CYCLE_10_MIN);
+    //then
+    assertEquals(false, result);
+  }
+
+  @Test
+  @Transactional
   public void 주기변경_60분_검증_테스트() {
     //given
     String tenMinIMEI = "864700040744484";
