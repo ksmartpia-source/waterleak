@@ -66,8 +66,4 @@ public class WaterLeakChangeCycleTest {
     assertEquals(false, result);
   }
 
-  @Test
-  @Transactional
-  public void 일부_단말기의_60분_주기변경실패시_로직_테스트() {
-  }
 }
