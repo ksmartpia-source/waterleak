@@ -28,9 +28,13 @@ public class Globals {
 
     //REST API 관련 값
     public static final String MESSAGE = "ment";
-    public static final String FAIL= "fail";
-    public static final String CONTENT= "content";
-    public static final String STATUS= "status";
-    public static final String SUCCESS_ADD_MODEM_MESSAGE= "success";
+    public static final String FAIL = "fail";
+    public static final String CONTENT = "content";
+    public static final String STATUS = "status";
+    public static final String SUCCESS_ADD_MODEM_MESSAGE = "success";
+
+    public static final String SUCCESS_START_EXAM = "start-success";
+    public static final String SUCCESS_FINISH_EXAM = "finish-success";
+    public static final String CLEAN_COMPLETE = "clean-complete";
 }
 
