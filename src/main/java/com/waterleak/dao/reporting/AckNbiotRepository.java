@@ -7,6 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AckNbiotRepository extends JpaRepository<AckNbiot, String> {
-
     List<AckNbiot> findAllByNbInstruction(String nbInstruction);
 }
