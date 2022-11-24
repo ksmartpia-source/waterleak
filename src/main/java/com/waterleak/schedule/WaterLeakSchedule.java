@@ -14,17 +14,17 @@ public class WaterLeakSchedule {
     private final WaterLeakProcessFinishService finishService;
     private final WaterLeakFinishAfterService cleanService;
 
-    @Scheduled(cron = "* * * * * *")
+    @Scheduled(cron = "0 0/15 * * * *")
     public void start() {
         startService.startWaterLeakExam();
     }
 
-    @Scheduled(cron = "* * * * * *")
+    @Scheduled(cron = "0 10/15 * * * *")
     public void finish() {
         finishService.finishWaterLeakExam();
     }
 
-    @Scheduled(cron = "* * * * * *")
+    @Scheduled(cron = "0 20/15 * * * *")
     public void clean() {
         cleanService.restorationAfterWaterLeakExam();
     }
