@@ -25,6 +25,13 @@ public class WaterLeakProcessFinishService {
     private final WaterLeakResultService resultService;
 
     @Transactional
+    public void finishWaterLeakExam() {
+        List<MtdWaterLeakExamGroup> allByExamStatus = groupRepository.findAllByExamStatus(WATERLEAK_STATUS_START);
+        for (MtdWaterLeakExamGroup willFinishGroup : allByExamStatus) {
+            finishWaterLeakExam(willFinishGroup);
+        }
+    }
+
     public void finishWaterLeakExam(MtdWaterLeakExamGroup group) {
         if (isReadyToFinish(group)) {
             group.finishExam();
