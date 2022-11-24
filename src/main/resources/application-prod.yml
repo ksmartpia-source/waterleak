@@ -19,11 +19,11 @@ spring:
       hibernate:
         id:
           new_generator_mappings: false
-  datasource: # wapi
+  datasource: # reporting
     jdbcUrl:
     username: root
     password:
-  second-datasource: # reporting
+  second-datasource: # wapi
     jdbcUrl:
     username: root
     password:

@@ -1,9 +1,9 @@
 server:
-  port: 7001
+  port: 7200
 
 hibernate:
   hbm2ddl:
-    auto: create-drop
+    auto: update
   cache:
     use_query_cache: false
     use_second_level_cache: false
@@ -19,11 +19,11 @@ spring:
       hibernate:
         id:
           new_generator_mappings: false
-  datasource: # wapi
-    jdbcUrl: jdbc:h2:mem:kspia_wapi_op;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS kspia_wapi_op
-    username: sa
-    password: sa
-  second-datasource: # reporting
-    jdbcUrl: jdbc:h2:mem:reporting;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS reporting
-    username: sa
-    password: sa
+  datasource: # reporting
+    jdbcUrl: jdbc:mysql://211.253.36.71:3306/reporting?useUnicode=true&charaterEncoding=utf-8
+    username: root
+    password: ksmartpia1!
+  second-datasource: # wapi
+    jdbcUrl: jdbc:mysql://ec2-54-180-141-141.ap-northeast-2.compute.amazonaws.com:3306/kspia_wapi_nonsan?useUnicode=true&charaterEncoding=utf-8
+    username: root
+    password: kspia01!@#
