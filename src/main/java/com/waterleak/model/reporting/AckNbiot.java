@@ -18,17 +18,17 @@ import java.time.LocalDateTime;
 @Entity
 public class AckNbiot {
     @Id
-    @Column(name = "IMEI", unique=true, length = 50)
+    @Column(name = "imei", unique=true, length = 50)
     private String imei;
 
-    @Column(name = "NB_INSTRUCTION", length = 50)
+    @Column(name = "nb_instruction", length = 50)
     private String nbInstruction;
 
     @CreatedDate
-    @Column(name = "INSERT_DATE", nullable = true, columnDefinition = "TIMESTAMP")
+    @Column(name = "insert_date", nullable = true, columnDefinition = "TIMESTAMP")
     private LocalDateTime insertDate;
 
-    @Column(name = "UPDATE_DATE", nullable = true, updatable = true)
+    @Column(name = "update_date", nullable = true, updatable = true)
     private LocalDateTime updateDate;
 
     @Builder

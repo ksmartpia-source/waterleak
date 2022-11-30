@@ -20,36 +20,36 @@ import static com.waterleak.config.Globals.WATERLEAK_STATUS_START;
 @Entity
 public class MtdWaterLeakExamGroup {
 	@Id
-	@Column(name = "EXAM_GROUP_IDX", length = 20)
+	@Column(name = "exam_group_idx", length = 20)
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Long examGroupIdx;
 	
 	@OneToMany(mappedBy = "examGroup")
 	private List<MtdWaterLeakExamWateruser> leakWaterUsers = new ArrayList<MtdWaterLeakExamWateruser>();
 
-	@Column(name = "EXAM_NM", length = 200)
+	@Column(name = "exam_nm", length = 200)
 	private String examNm;
 	
-	@Column(name = "EXAM_PLAN_START_DT")
+	@Column(name = "exam_plan_start_dt")
 	private LocalDateTime examPlanStartDt;
 	
-	@Column(name = "EXAM_STARTED_DT", nullable = true)
+	@Column(name = "exam_started_dt", nullable = true)
 	private LocalDateTime examStartedDt;
 	
-	@Column(name = "EXAM_FINISHED_DT", nullable = true)
+	@Column(name = "exam_finished_dt", nullable = true)
 	private LocalDateTime examFinishiedDt;
 	
-	@Column(name = "EXAM_STATUS", length = 10)
+	@Column(name = "exam_status", length = 10)
 	private String examStatus;
 	
-	@Column(name = "CREATED_USER", length = 20)
+	@Column(name = "created_user", length = 20)
 	private String createdUser;
 	
 	@CreationTimestamp
-	@Column(name = "CREATED_DATE")
+	@Column(name = "created_date")
 	private Timestamp createdDate;
 
-	@Column(name = "GROUP_SID")
+	@Column(name = "group_sid")
 	private Long groupSid;
 
 	public void updateExamPlanStartDt(LocalDateTime examPlanStartDt) {

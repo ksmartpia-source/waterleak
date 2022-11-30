@@ -16,29 +16,29 @@ import static com.waterleak.config.Globals.*;
 public class MtdWaterLeakExamWateruser {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "EXAM_WATERUSER_IDX", length = 20)
+    @Column(name = "exam_wateruser_idx", length = 20)
     private Long examWateruserIdx;
 
     @ManyToOne
-    @JoinColumn(name = "EXAM_GROUP_IDX")
+    @JoinColumn(name = "exam_group_idx")
     private MtdWaterLeakExamGroup examGroup;
 
-    @Column(name = "CONSUMER_SID", unique = true)
+    @Column(name = "consumer_sid", unique = true)
     private Long consumerSid;
 
-    @Column(name = "IMEI", unique = true, length = 50)
+    @Column(name = "imei", unique = true, length = 50)
     private String imei;
 
-    @Column(name = "EXAM_RESULT", nullable = true, length = 5)
+    @Column(name = "exam_result", nullable = true, length = 5)
     private String examResult;
 
-    @Column(name = "CHANGE_STATUS", nullable = true, length = 5)
+    @Column(name = "change_status", nullable = true, length = 5)
     private String changeStatus;
 
-    @Column(name = "LEAK_MIN_USAGE", nullable = true, precision = 10, scale = 3)
+    @Column(name = "leak_min_usage", nullable = true, precision = 10, scale = 3)
     private BigDecimal leakMinUsage;
 
-    @Column(name = "GROUP_SID")
+    @Column(name = "group_sid")
     private Long groupSid;
 
     public void updateChangeStatus(String changeStatus) {

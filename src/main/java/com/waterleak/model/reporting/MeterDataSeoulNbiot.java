@@ -20,17 +20,17 @@ import lombok.NoArgsConstructor;
 @Entity
 public class MeterDataSeoulNbiot implements Serializable {
     @Id
-    @Column(name = "IMEI", length = 50)
+    @Column(name = "imei", length = 50)
     private String imei;
 
     @Id
-    @Column(name = "METERING_DATE")
+    @Column(name = "metering_date")
     private Timestamp meteringDate;
 
-    @Column(name = "IMSI", length = 50)
+    @Column(name = "imsi", length = 50)
     private String imsi;
 
-    @Column(name = "METERING_VALUE")
+    @Column(name = "metering_value")
     private BigDecimal meteringValue;
 
     @Builder
