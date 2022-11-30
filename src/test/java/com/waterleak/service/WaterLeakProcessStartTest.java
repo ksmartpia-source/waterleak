@@ -84,6 +84,7 @@ public class WaterLeakProcessStartTest {
     public void 상태가_R_시작예정일이_도래_하지않은_몇몇의_수용가만_10분_주기변경이_성공한_경우() {
         //given
         MtdWaterLeakExamGroup group = groupRepository.findById(11L).get();
+        group.updateExamPlanStartDt(LocalDateTime.now().plusDays(1L));
         //when
         Boolean result = startService.isReadyToStart(group);
         //then
@@ -106,9 +107,8 @@ public class WaterLeakProcessStartTest {
         MtdWaterLeakExamGroup group = groupRepository.findById(11L).get();
         group.updateExamPlanStartDt(LocalDateTime.now().minusDays(1L));
         //when
-        Boolean result = startService.isReadyToStart(group);
+        startService.startWaterLeakExam(group);
         //then
-        assertEquals(true, result);
         MtdWaterLeakExamGroup savedGroup = groupRepository.findById(11L).get();
         List<MtdWaterLeakExamWateruser> leakWaterUsers = wateruserRepository.findAllByExamGroup(savedGroup);
         int changeSuccessCnt = 0;
@@ -121,6 +121,9 @@ public class WaterLeakProcessStartTest {
         }
         assertEquals(2, changeSuccessCnt);
         assertEquals(1, changeFailCnt);
+        assertEquals(Globals.WATERLEAK_STATUS_START, savedGroup.getExamStatus());
+        assertNotNull(savedGroup.getExamStartedDt());
+        assertNotNull(savedGroup.getExamFinishiedDt());
     }
 
     @Test
@@ -130,10 +133,8 @@ public class WaterLeakProcessStartTest {
         MtdWaterLeakExamGroup group = groupRepository.findById(21L).get();
         group.updateExamPlanStartDt(LocalDateTime.now().minusDays(1L));
         //when
-        Boolean result = startService.isReadyToStart(group);
-        groupRepository.flush();
+        startService.startWaterLeakExam(group);
         //then
-        assertEquals(false, result);
         MtdWaterLeakExamGroup savedGroup = groupRepository.findById(21L).get();
         assertEquals(Globals.WATERLEAK_STATUS_FINISH, savedGroup.getExamStatus());
         assertEquals(savedGroup.getExamStartedDt(), savedGroup.getExamFinishiedDt());
@@ -141,5 +142,13 @@ public class WaterLeakProcessStartTest {
         for (MtdWaterLeakExamWateruser leakWaterUser : leakWaterUsers) {
             assertEquals(Globals.WATERLEAK_STATUS_CHANGE_FAIL, leakWaterUser.getChangeStatus());
         }
+    }
+
+    @Test
+    @Transactional
+    public void 대상수용가가_1개인경우() {
+        //given
+        //when
+        //then
     }
 }

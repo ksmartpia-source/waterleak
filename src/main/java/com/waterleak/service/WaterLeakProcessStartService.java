@@ -51,6 +51,7 @@ public class WaterLeakProcessStartService {
         for (MtdWaterLeakExamWateruser leaker : leakers) {
             if (changeVerification.isCycleChangeVerification(leaker.getImei(), Globals.CYCLE_10_MIN)) {
                 leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_10);
+                leakWateruserRepository.save(leaker);
                 changeUsers++;
             }
         }
@@ -58,23 +59,26 @@ public class WaterLeakProcessStartService {
             return true;
         }
         if (changeUsers == 0) {
-            allChangeFails(group, leakers);
+            if (LocalDateTime.now().isAfter(group.getExamPlanStartDt())) {
+                allChangeFails(group, leakers);
+            }
             return false;
         }
         if (changeUsers < leakers.size()) {
             if (LocalDateTime.now().isAfter(group.getExamPlanStartDt()) && leakers.size() > 0) {
-                someChangeFails(leakers);
+                someChangeFails(group, leakers);
                 return true;
             }
         }
         return false;
     }
 
-    private void someChangeFails(List<MtdWaterLeakExamWateruser> leakers) {
+    private void someChangeFails(MtdWaterLeakExamGroup group, List<MtdWaterLeakExamWateruser> leakers) {
         for (MtdWaterLeakExamWateruser leaker : leakers) {
             if (Objects.isNull(leaker.getChangeStatus()) ||
                     !leaker.getChangeStatus().equals(Globals.WATERLEAK_STATUS_CHANGE_10)) {
                 leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_FAIL);
+                leakWateruserRepository.save(leaker);
             }
         }
     }
@@ -83,6 +87,7 @@ public class WaterLeakProcessStartService {
                                 List<MtdWaterLeakExamWateruser> leakers) {
         for (MtdWaterLeakExamWateruser leaker : leakers) {
             leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_FAIL);
+            leakWateruserRepository.save(leaker);
         }
         group.failExam();
         groupRepository.save(group);
