@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 import static com.waterleak.config.Globals.*;
@@ -39,6 +41,10 @@ public class WaterLeakRestController {
 
     @PostMapping(value = "start-exam")
     public ResponseEntity startExam() {
+        System.out.println("#####################################");
+        System.out.println("current-time : " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        System.out.println("call -- WaterLeakRestController.startExam()");
+        System.out.println("#####################################");
         HashMap<String, Object> responseMap = new HashMap<String, Object>();
         startService.startWaterLeakExam();
         responseMap.put(MESSAGE, SUCCESS_START_EXAM);
@@ -51,6 +57,10 @@ public class WaterLeakRestController {
 
     @PostMapping(value = "finish-exam")
     public ResponseEntity finishExam() {
+        System.out.println("#####################################");
+        System.out.println("current-time : " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        System.out.println("call -- WaterLeakRestController.finishExam()");
+        System.out.println("#####################################");
         HashMap<String, Object> responseMap = new HashMap<String, Object>();
         finishService.finishWaterLeakExam();
         responseMap.put(MESSAGE, SUCCESS_FINISH_EXAM);
@@ -63,6 +73,10 @@ public class WaterLeakRestController {
 
     @PostMapping(value = "clean-data")
     public ResponseEntity cleanData() {
+        System.out.println("#####################################");
+        System.out.println("current-time : " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        System.out.println("call -- WaterLeakRestController.cleanData()");
+        System.out.println("#####################################");
         HashMap<String, Object> responseMap = new HashMap<String, Object>();
         cleanService.restorationAfterWaterLeakExam();
         responseMap.put(MESSAGE, CLEAN_COMPLETE);
