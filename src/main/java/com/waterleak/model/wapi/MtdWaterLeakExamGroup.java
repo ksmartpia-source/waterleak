@@ -16,7 +16,7 @@ import static com.waterleak.config.Globals.WATERLEAK_STATUS_START;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "MTD_NB_WATER_LEAK_EXAM_GROUP")
+@Table(name = "mtd_nb_water_leak_exam_group")
 @Entity
 public class MtdWaterLeakExamGroup {
 	@Id

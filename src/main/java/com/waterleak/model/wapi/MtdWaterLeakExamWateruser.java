@@ -11,7 +11,7 @@ import static com.waterleak.config.Globals.*;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "MTD_NB_WATER_LEAK_EXAM_WATERUSER")
+@Table(name = "mtd_nb_water_leak_exam_wateruser")
 @Entity
 public class MtdWaterLeakExamWateruser {
     @Id

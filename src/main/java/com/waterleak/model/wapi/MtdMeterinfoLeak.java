@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "MTD_NB_METERINFO_LEAK")
+@Table(name = "mtd_nb_meterinfo_leak")
 @IdClass(MtdMeterinfoLeakPK.class)
 @Entity
 public class MtdMeterinfoLeak implements Serializable {
@@ -27,7 +27,7 @@ public class MtdMeterinfoLeak implements Serializable {
 	private Long examWateruserIdx;
 
 	@Id
-	@Column(name="IMEI", length = 50)
+	@Column(name="imei", length = 50)
 	private String imei;
 
 	@Id
