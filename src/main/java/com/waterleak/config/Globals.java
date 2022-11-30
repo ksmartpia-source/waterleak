@@ -23,8 +23,10 @@ public class Globals {
     public static final int RESULT_MIDDLE_COUNT = 3;
 
     //단말기에 전송할 누수점검 명령어
-    public static final String NB_INSTRUCTION_TO_10 = "ZZZ";
-    public static final String NB_INSTRUCTION_TO_60 = "QQQ";
+    public static final String NB_TCP_INSTRUCTION_TO_10 = "qgRQiAH/2A==";
+    public static final String NB_TCP_INSTRUCTION_TO_60 = "qgRQAQb/Vg==";
+    public static final String NB_UDP_INSTRUCTION_TO_10 = "AA04508801FFD8";
+    public static final String NB_UDP_INSTRUCTION_TO_60 = "AA04500106FF56";
 
     //REST API 관련 값
     public static final String MESSAGE = "ment";

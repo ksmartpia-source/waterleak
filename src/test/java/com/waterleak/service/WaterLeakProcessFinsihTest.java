@@ -61,7 +61,7 @@ public class WaterLeakProcessFinsihTest {
         for (MtdWaterLeakExamWateruser leaker : leakers) {
             Optional<AckNbiot> byId = ackNbiotRepository.findById(leaker.getImei());
             assertTrue(byId.isPresent());
-            assertEquals(Globals.NB_INSTRUCTION_TO_60, byId.get().getNbInstruction());
+            assertEquals(Globals.NB_TCP_INSTRUCTION_TO_60, byId.get().getNbInstruction());
         }
     }
 

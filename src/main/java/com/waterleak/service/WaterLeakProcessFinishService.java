@@ -41,7 +41,7 @@ public class WaterLeakProcessFinishService {
                 AckNbiot to60Instruction = AckNbiot
                         .builder()
                         .imei(leakWaterUser.getImei())
-                        .nbInstruction(NB_INSTRUCTION_TO_60)
+                        .nbInstruction(NB_TCP_INSTRUCTION_TO_60)
                         .build();
                 leakWaterUser.updateChangeStatus(WATERLEAK_STATUS_CHANGE_60);
                 leakWateruserRepository.save(leakWaterUser);
