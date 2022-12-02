@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import static com.waterleak.config.Globals.NB_TCP_INSTRUCTION_TO_60;
 import static com.waterleak.config.Globals.WATERLEAK_STATUS_READY;
 
 @Service
@@ -39,9 +40,6 @@ public class WaterLeakProcessStartService {
             group.startExam();
             MtdWaterLeakExamGroup startedGroup = groupRepository.save(group);
             List<MtdWaterLeakExamWateruser> leakWaterUsers = leakWateruserRepository.findAllByExamGroup(startedGroup);
-            for (MtdWaterLeakExamWateruser leakWaterUser : leakWaterUsers) {
-                ackNbiotRepository.delete(AckNbiot.builder().imei(leakWaterUser.getImei()).build());
-            }
         }
     }
 
@@ -88,6 +86,12 @@ public class WaterLeakProcessStartService {
         for (MtdWaterLeakExamWateruser leaker : leakers) {
             leaker.updateChangeStatus(Globals.WATERLEAK_STATUS_CHANGE_FAIL);
             leakWateruserRepository.save(leaker);
+            AckNbiot to60Instruction = AckNbiot
+                    .builder()
+                    .imei(leaker.getImei())
+                    .nbInstruction(NB_TCP_INSTRUCTION_TO_60)
+                    .build();
+            ackNbiotRepository.save(to60Instruction);
         }
         group.failExam();
         groupRepository.save(group);
