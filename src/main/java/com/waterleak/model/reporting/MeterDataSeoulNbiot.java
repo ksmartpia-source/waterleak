@@ -27,6 +27,9 @@ public class MeterDataSeoulNbiot implements Serializable {
     @Column(name = "metering_date")
     private Timestamp meteringDate;
 
+    @Column(name = "receiving_date")
+    private Timestamp receivingDate;
+
     @Column(name = "imsi", length = 50)
     private String imsi;
 
@@ -35,10 +38,11 @@ public class MeterDataSeoulNbiot implements Serializable {
 
     @Builder
     public MeterDataSeoulNbiot(String imei, Timestamp meteringDate, String imsi,
-        BigDecimal meteringValue) {
+        BigDecimal meteringValue, Timestamp receivingDate) {
         this.imei = imei;
         this.meteringDate = meteringDate;
         this.imsi = imsi;
         this.meteringValue = meteringValue;
+        this.receivingDate = receivingDate;
     }
 }

@@ -31,7 +31,7 @@ public class WaterLeakResultServiceV1 implements WaterLeakResultService {
                         leaker.getImei(),
                         group.getExamStartedTimeStampDt(),
                         group.getExamFinishedTimeStampDt());
-        List<MtdMeterinfoLeak> savedMeterInfoLeaks = calculateUsages(seoulNbiots);
+        List<MtdMeterinfoLeak> savedMeterInfoLeaks = calculateUsages(seoulNbiots, examWateruserIdx);
         determine(savedMeterInfoLeaks, leaker);
     }
 
@@ -52,14 +52,16 @@ public class WaterLeakResultServiceV1 implements WaterLeakResultService {
         leakExamWateruserRepository.save(leaker);
     }
 
-    public List<MtdMeterinfoLeak> calculateUsages(List<MeterDataSeoulNbiot> seoulNbiots) {
+    public List<MtdMeterinfoLeak> calculateUsages(List<MeterDataSeoulNbiot> seoulNbiots, long examWateruserIdx) {
         List<MtdMeterinfoLeak> meterinfoLeaks = new ArrayList<MtdMeterinfoLeak>();
         int index = 0;
         for (MeterDataSeoulNbiot seoulNbiot : seoulNbiots) {
             MtdMeterinfoLeak meterinfoLeak = MtdMeterinfoLeak.builder()
+                    .examWateruserIdx(examWateruserIdx)
                     .groupSid(6L)
                     .imei(seoulNbiot.getImei())
                     .meteringDate(seoulNbiot.getMeteringDate())
+                    .receivingDate(seoulNbiot.getReceivingDate())
                     .meteringValue(seoulNbiot.getMeteringValue())
                     .meteringUsage(
                             index == seoulNbiots.size() - 1 ?
