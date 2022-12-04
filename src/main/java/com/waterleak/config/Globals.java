@@ -23,8 +23,10 @@ public class Globals {
     public static final int RESULT_MIDDLE_COUNT = 3;
 
     //단말기에 전송할 누수점검 명령어
+    //TCP(LwM2M) INSTRUCTION
     public static final String NB_TCP_INSTRUCTION_TO_10 = "qgRQiAH/2A==";
     public static final String NB_TCP_INSTRUCTION_TO_60 = "qgRQAQb/Vg==";
+    //UDP INSTRUCTION
     public static final String NB_UDP_INSTRUCTION_TO_10 = "AA04508801FFD8";
     public static final String NB_UDP_INSTRUCTION_TO_60 = "AA04500106FF56";
 

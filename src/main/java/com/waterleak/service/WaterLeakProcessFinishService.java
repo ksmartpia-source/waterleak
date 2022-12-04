@@ -42,6 +42,7 @@ public class WaterLeakProcessFinishService {
                         .builder()
                         .imei(leakWaterUser.getImei())
                         .nbInstruction(NB_TCP_INSTRUCTION_TO_60)
+                        .insertDate(LocalDateTime.now())
                         .build();
                 leakWaterUser.updateChangeStatus(WATERLEAK_STATUS_CHANGE_60);
                 leakWateruserRepository.save(leakWaterUser);

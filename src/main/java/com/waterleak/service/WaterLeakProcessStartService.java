@@ -90,6 +90,7 @@ public class WaterLeakProcessStartService {
                     .builder()
                     .imei(leaker.getImei())
                     .nbInstruction(NB_TCP_INSTRUCTION_TO_60)
+                    .insertDate(LocalDateTime.now())
                     .build();
             ackNbiotRepository.save(to60Instruction);
         }
