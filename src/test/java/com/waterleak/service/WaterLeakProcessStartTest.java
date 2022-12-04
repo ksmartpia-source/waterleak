@@ -39,7 +39,6 @@ public class WaterLeakProcessStartTest {
     public void 누수점검_시작_테스트() {
         //given
         MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
-        //when
         List<MtdWaterLeakExamWateruser> allByExamGroup = wateruserRepository
             .findAllByExamGroup(group);
         for (MtdWaterLeakExamWateruser beforeLeaker : allByExamGroup) {
@@ -47,6 +46,7 @@ public class WaterLeakProcessStartTest {
             assertEquals(true, byId.isPresent());
         }
 
+        //when
         startService.startWaterLeakExam(group);
 
         //then
@@ -59,7 +59,7 @@ public class WaterLeakProcessStartTest {
             .findAllByExamGroup(startedGroup);
         for (MtdWaterLeakExamWateruser leaker : leakers) {
             Optional<AckNbiot> byId = ackNbiotRepository.findById(leaker.getImei());
-            assertEquals(false, byId.isPresent());
+            assertEquals(true, byId.isPresent());
         }
     }
 
