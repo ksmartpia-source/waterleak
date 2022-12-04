@@ -12,10 +12,15 @@ import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.dao.wapi.MtdMeterinfoLeakRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamGroupRepository;
 import com.waterleak.dao.wapi.MtdWaterLeakExamWateruserRepository;
+import com.waterleak.model.wapi.MtdMeterinfoLeak;
 import com.waterleak.model.wapi.MtdWaterLeakExamGroup;
 import com.waterleak.model.wapi.MtdWaterLeakExamWateruser;
 import com.waterleak.service.result.WaterLeakResultService;
+
+import java.util.List;
 import java.util.Optional;
+
+import com.waterleak.service.result.WaterLeakResultServiceV1;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,4 +86,17 @@ public class WaterLeakResultTest {
         assertNotNull(finishedLeaker.getLeakMinUsage());
     }
 
+    @Test
+    @Transactional
+    public void leakMinUsage결론도출_테스트() {
+        long examWateruserIdx = 409187L;
+        MtdWaterLeakExamWateruser leaker = leakExamWateruserRepository.findById(examWateruserIdx).get();
+        List<MtdMeterinfoLeak> meterinfoLeaks = meterinfoLeakRepository.findAllByExamWateruserIdx(examWateruserIdx);
+        WaterLeakResultServiceV1 resultService = new WaterLeakResultServiceV1(leakExamWateruserRepository, seoulNbiotRepository, meterinfoLeakRepository);
+        resultService.determine(meterinfoLeaks,leaker);
+
+        MtdWaterLeakExamWateruser determinedLeaker = leakExamWateruserRepository.findById(examWateruserIdx).get();
+        System.out.println("determinedLeaker.getExamResult() = " + determinedLeaker.getExamResult());
+        System.out.println("determinedLeaker.getLeakMinUsage() = " + determinedLeaker.getLeakMinUsage());
+    }
 }

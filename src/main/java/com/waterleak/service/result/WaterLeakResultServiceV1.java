@@ -35,7 +35,7 @@ public class WaterLeakResultServiceV1 implements WaterLeakResultService {
         determine(savedMeterInfoLeaks, leaker);
     }
 
-    private void determine(List<MtdMeterinfoLeak> savedMeterInfoLeaks, MtdWaterLeakExamWateruser leaker) {
+    public void determine(List<MtdMeterinfoLeak> savedMeterInfoLeaks, MtdWaterLeakExamWateruser leaker) {
         int leakCount = 0;
         BigDecimal leakMinUsage = BigDecimal.valueOf(Integer.MAX_VALUE);
         BigDecimal zero = BigDecimal.ZERO;
