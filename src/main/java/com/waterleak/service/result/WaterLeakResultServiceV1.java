@@ -35,28 +35,6 @@ public class WaterLeakResultServiceV1 implements WaterLeakResultService {
         determine(savedMeterInfoLeaks, leaker);
     }
 
-    public void determine(List<MtdMeterinfoLeak> savedMeterInfoLeaks, MtdWaterLeakExamWateruser leaker) {
-        int leakCount = 0;
-        BigDecimal leakMinUsage = BigDecimal.valueOf(Integer.MAX_VALUE);
-        BigDecimal zero = BigDecimal.ZERO;
-        for (MtdMeterinfoLeak savedMeterInfoLeak : savedMeterInfoLeaks) {
-            if(savedMeterInfoLeak.getMeteringUsage().compareTo(BigDecimal.valueOf(-1)) > 0){
-                if (savedMeterInfoLeak.getMeteringUsage().compareTo(zero) == 0) {
-                    leakCount++;
-                }
-                if (savedMeterInfoLeak.getMeteringUsage().compareTo(zero) > 0
-                        && savedMeterInfoLeak.getMeteringUsage().compareTo(leakMinUsage) < 0) {
-                    leakMinUsage = savedMeterInfoLeak.getMeteringUsage();
-                }
-            }
-        }
-        if(leakMinUsage.equals(BigDecimal.valueOf(Integer.MAX_VALUE)))
-            leakMinUsage = zero;
-
-        leaker.determinResult(leakCount, leakMinUsage);
-        leakExamWateruserRepository.save(leaker);
-    }
-
     public List<MtdMeterinfoLeak> calculateUsages(List<MeterDataSeoulNbiot> seoulNbiots, long examWateruserIdx) {
         List<MtdMeterinfoLeak> meterinfoLeaks = new ArrayList<MtdMeterinfoLeak>();
         int index = 0;
@@ -79,5 +57,27 @@ public class WaterLeakResultServiceV1 implements WaterLeakResultService {
             index++;
         }
         return meterinfoLeakRepository.saveAll(meterinfoLeaks);
+    }
+
+    public void determine(List<MtdMeterinfoLeak> savedMeterInfoLeaks, MtdWaterLeakExamWateruser leaker) {
+        int leakCount = 0;
+        BigDecimal leakMinUsage = BigDecimal.valueOf(Integer.MAX_VALUE);
+        BigDecimal zero = BigDecimal.ZERO;
+        for (MtdMeterinfoLeak savedMeterInfoLeak : savedMeterInfoLeaks) {
+            if(savedMeterInfoLeak.getMeteringUsage().compareTo(BigDecimal.valueOf(-1)) > 0){
+                if (savedMeterInfoLeak.getMeteringUsage().compareTo(zero) == 0) {
+                    leakCount++;
+                }
+                if (savedMeterInfoLeak.getMeteringUsage().compareTo(zero) > 0
+                        && savedMeterInfoLeak.getMeteringUsage().compareTo(leakMinUsage) < 0) {
+                    leakMinUsage = savedMeterInfoLeak.getMeteringUsage();
+                }
+            }
+        }
+        if(leakMinUsage.equals(BigDecimal.valueOf(Integer.MAX_VALUE)))
+            leakMinUsage = zero;
+
+        leaker.determinResult(leakCount, leakMinUsage);
+        leakExamWateruserRepository.save(leaker);
     }
 }

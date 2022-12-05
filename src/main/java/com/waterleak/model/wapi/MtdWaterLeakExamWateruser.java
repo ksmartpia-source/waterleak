@@ -62,13 +62,14 @@ public class MtdWaterLeakExamWateruser {
     }
 
     public void determinResult(int leakCount, BigDecimal leakMinUsage) {
+        this.leakMinUsage = leakMinUsage.multiply(BigDecimal.valueOf(6));
         if (leakCount <= RESULT_MIDDLE_COUNT) {
             this.examResult = WATERLEAK_RESULT_LEAK;
         } else if (leakCount <= RESULT_UPPER_COUNT) {
             this.examResult = WATERLEAK_RESULT_FINE_LEAK;
         } else {
             this.examResult = WATERLEAK_RESULT_NORMAL;
+            this.leakMinUsage = BigDecimal.valueOf(0);
         }
-        this.leakMinUsage = leakMinUsage.multiply(BigDecimal.valueOf(6));
     }
 }
