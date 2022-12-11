@@ -38,6 +38,9 @@ public class MtdWaterLeakExamWateruser {
     @Column(name = "leak_min_usage", nullable = true, precision = 10, scale = 3)
     private BigDecimal leakMinUsage;
 
+    @Column(name = "comm_type", nullable = true, length = 20)
+    private String commType;
+
     @Column(name = "group_sid")
     private Long groupSid;
 
@@ -49,7 +52,7 @@ public class MtdWaterLeakExamWateruser {
     public MtdWaterLeakExamWateruser(
             Long examWateruserIdx,
             MtdWaterLeakExamGroup examGroup, Long consumerSid, String imei, String examResult,
-            String changeStatus, BigDecimal leakMinUsage, Long groupSid
+            String changeStatus, BigDecimal leakMinUsage, Long groupSid, String commType
     ) {
         this.examWateruserIdx = examWateruserIdx;
         this.examGroup = examGroup;
@@ -59,6 +62,7 @@ public class MtdWaterLeakExamWateruser {
         this.changeStatus = changeStatus;
         this.leakMinUsage = leakMinUsage;
         this.groupSid = groupSid;
+        this.commType = commType;
     }
 
     public void determinResult(int leakCount, BigDecimal leakMinUsage) {

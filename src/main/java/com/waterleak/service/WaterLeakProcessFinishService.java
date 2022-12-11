@@ -41,7 +41,7 @@ public class WaterLeakProcessFinishService {
                 AckNbiot to60Instruction = AckNbiot
                         .builder()
                         .imei(leakWaterUser.getImei())
-                        .nbInstruction(NB_TCP_INSTRUCTION_TO_60)
+                        .nbInstruction(getFinishInstruct(leakWaterUser))
                         .insertDate(LocalDateTime.now())
                         .build();
                 leakWaterUser.updateChangeStatus(WATERLEAK_STATUS_CHANGE_60);
@@ -50,6 +50,18 @@ public class WaterLeakProcessFinishService {
                 resultService.decision(group, leakWaterUser.getExamWateruserIdx());
             }
         }
+    }
+
+    public String getFinishInstruct(MtdWaterLeakExamWateruser leakWaterUser) {
+        if (leakWaterUser.getCommType() == null
+                || leakWaterUser.getCommType().equals(""))
+            return FAIL;
+        if (leakWaterUser.getCommType().equals(COMMUNICATION_TYPE_TCP))
+            return NB_TCP_INSTRUCTION_TO_60;
+        if (leakWaterUser.getCommType().equals(COMMUNICATION_TYPE_UDP))
+            return NB_UDP_INSTRUCTION_TO_60;
+
+        return FAIL;
     }
 
     public Boolean isReadyToFinish(MtdWaterLeakExamGroup group) {

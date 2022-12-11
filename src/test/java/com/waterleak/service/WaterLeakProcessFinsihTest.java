@@ -21,6 +21,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.waterleak.config.Globals.COMMUNICATION_TYPE_TCP;
+import static com.waterleak.config.Globals.COMMUNICATION_TYPE_UDP;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
@@ -61,7 +63,10 @@ public class WaterLeakProcessFinsihTest {
         for (MtdWaterLeakExamWateruser leaker : leakers) {
             Optional<AckNbiot> byId = ackNbiotRepository.findById(leaker.getImei());
             assertTrue(byId.isPresent());
-            assertEquals(Globals.NB_TCP_INSTRUCTION_TO_60, byId.get().getNbInstruction());
+            if(leaker.getCommType().equals(COMMUNICATION_TYPE_TCP))
+                assertEquals(Globals.NB_TCP_INSTRUCTION_TO_60, byId.get().getNbInstruction());
+            if(leaker.getCommType().equals(COMMUNICATION_TYPE_UDP))
+                assertEquals(Globals.NB_UDP_INSTRUCTION_TO_60, byId.get().getNbInstruction());
         }
     }
 

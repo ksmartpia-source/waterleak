@@ -133,6 +133,7 @@ create table mtd_nb_water_leak_exam_wateruser
     imei varchar(50) null,
     leak_min_usage decimal(10,3) null,
     exam_group_idx bigint null,
+    comm_type varchar(20) null,
     constraint UK_9b3fs5xe8aw5d01ui8ks8k0f3 unique (imei),
     constraint UK_agxmpte0ncic5u5rl134r9qbc unique (consumer_sid),
     constraint FK9w5vrl0a7tmfeyajm176y563r foreign key (exam_group_idx) references mtd_nb_water_leak_exam_group (exam_group_idx)
@@ -353,9 +354,9 @@ INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, 
 
 INSERT INTO mtd_nb_water_leak_exam_group (exam_group_idx, created_date, created_user, exam_finished_dt, exam_nm, exam_plan_start_dt, exam_started_dt, exam_status, group_sid)
 VALUES (41, '2022-11-17 14:02:00', '관리자', '2022-11-21 14:02:00', '누수점검종료_테스트', '2022-11-20 14:02:00', '2022-11-18 14:02:00', 'S', 6);
-INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (42, 45, null, '10', '864747540730534', null, 41);
-INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (43, 46, null, '10', '860007050890234', null, 41);
-INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx) VALUES (44, 47, null, '10', '864447058887774', null, 41);
+INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx, comm_type) VALUES (42, 45, null, '10', '864747540730534', null, 41, 'UDP');
+INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx, comm_type) VALUES (43, 46, null, '10', '860007050890234', null, 41, 'UDP');
+INSERT INTO mtd_nb_water_leak_exam_wateruser (exam_wateruser_idx, consumer_sid, exam_result, change_status, imei, leak_min_usage, exam_group_idx, comm_type) VALUES (44, 47, null, '10', '864447058887774', null, 41, 'TCP');
 
 /* 누수점검 완료 예정 데이터 */
 INSERT INTO meterdataseoulnbiot (imei, imsi, metering_date, receiving_date, rssi, ber, cid, rsrp, rsrq, snr, modem_serial, modem_fwversion, modem_battery, meter_serial, meter_type, meter_size, meter_status_overload, meter_status_leaked, meter_status_reversed, meter_status_battery, metering_interval, reporting_interval, metering_value, modem_temp, insert_date, update_date) VALUES ('864747540730534','450061236538913','2022-11-18 18:49','2022-11-18 10:49','-90','0','12827','-960','-100','-160','2204008805','2.3','3.6','21523523','1','20','0','0','0','0','1','6','18.664','12.7','2022-11-18 10:49','2022-11-18 10:49');

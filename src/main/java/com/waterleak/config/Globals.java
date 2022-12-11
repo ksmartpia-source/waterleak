@@ -29,6 +29,9 @@ public class Globals {
     //UDP INSTRUCTION
     public static final String NB_UDP_INSTRUCTION_TO_10 = "AA04508801FFD8";
     public static final String NB_UDP_INSTRUCTION_TO_60 = "AA04500106FF56";
+    //통신타입 (UDP , TCP)
+    public static final String COMMUNICATION_TYPE_UDP = "UDP";
+    public static final String COMMUNICATION_TYPE_TCP = "TCP";
 
     //REST API 관련 값
     public static final String MESSAGE = "ment";
@@ -36,7 +39,6 @@ public class Globals {
     public static final String CONTENT = "content";
     public static final String STATUS = "status";
     public static final String SUCCESS_ADD_MODEM_MESSAGE = "success";
-
     public static final String SUCCESS_START_EXAM = "start-success";
     public static final String SUCCESS_FINISH_EXAM = "finish-success";
     public static final String CLEAN_COMPLETE = "clean-complete";
