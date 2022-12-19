@@ -45,7 +45,7 @@ public class WaterLeakResultTest {
 
     @Test
     @Transactional
-    public void 누수점검_결론_도출_누수() {
+    public void 누수점검_결론_도출_누수_인경우_테스트() {
         //given
         long examWateruserIdx = 72L;
         Optional<MtdWaterLeakExamGroup> byId = groupRepository.findById(71L);
@@ -62,7 +62,7 @@ public class WaterLeakResultTest {
 
     @Test
     @Transactional
-    public void 누수점검_결론_도출_미세누수() {
+    public void 누수점검_결론_도출_미세누수_인경우_테스트() {
         //given
         long examWateruserIdx = 82L;
         Optional<MtdWaterLeakExamGroup> byId = groupRepository.findById(81L);
@@ -79,7 +79,7 @@ public class WaterLeakResultTest {
 
     @Test
     @Transactional
-    public void 누수점검_결론_도출_정상() {
+    public void 누수점검_결론_도출_정상_인경우_테스트() {
         //given
         long examWateruserIdx = 92L;
         Optional<MtdWaterLeakExamGroup> byId = groupRepository.findById(91L);

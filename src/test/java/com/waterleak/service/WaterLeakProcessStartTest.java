@@ -65,7 +65,7 @@ public class WaterLeakProcessStartTest {
 
     @Test
     @Transactional
-    public void 상태가_R_이고_모든_수용가의_단말기_10분_주기변경이_성공한_경우() {
+    public void 상태가_R_이고_모든_수용가의_단말기_10분_주기변경이_성공한_경우_테스트() {
         //given
         MtdWaterLeakExamGroup group = groupRepository.findById(1L).get();
         //when
@@ -81,7 +81,7 @@ public class WaterLeakProcessStartTest {
 
     @Test
     @Transactional
-    public void 상태가_R_시작예정일이_도래_하지않은_몇몇의_수용가만_10분_주기변경이_성공한_경우() {
+    public void 상태가_R_시작예정일이_도래_하지않은_몇몇의_수용가만_10분_주기변경이_성공한_경우_테스트() {
         //given
         MtdWaterLeakExamGroup group = groupRepository.findById(11L).get();
         group.updateExamPlanStartDt(LocalDateTime.now().plusDays(1L));
@@ -102,7 +102,7 @@ public class WaterLeakProcessStartTest {
 
     @Test
     @Transactional
-    public void 상태가_R_시작예정일이_도래한_몇몇의_수용가만_10분_주기변경이_성공한_경우() {
+    public void 상태가_R_시작예정일이_도래한_몇몇의_수용가만_10분_주기변경이_성공한_경우_테스트() {
         //given
         MtdWaterLeakExamGroup group = groupRepository.findById(11L).get();
         group.updateExamPlanStartDt(LocalDateTime.now().minusDays(1L));
@@ -128,7 +128,7 @@ public class WaterLeakProcessStartTest {
 
     @Test
     @Transactional
-    public void 상태가_R_시작예정일이_도래한_모든수용가의_10분_주기변경이_실패_한경우() {
+    public void 상태가_R_시작예정일이_도래한_모든수용가의_10분_주기변경이_실패_한경우_테스트() {
         //given
         MtdWaterLeakExamGroup group = groupRepository.findById(21L).get();
         group.updateExamPlanStartDt(LocalDateTime.now().minusDays(1L));

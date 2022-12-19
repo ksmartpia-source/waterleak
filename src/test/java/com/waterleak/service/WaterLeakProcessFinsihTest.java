@@ -38,7 +38,7 @@ public class WaterLeakProcessFinsihTest {
 
     @Test
     @Transactional
-    public void 상태가_S_이고_검사종료일이_도래한경우() {
+    public void 상태가_S_이고_검사종료일이_도래한경우_테스트() {
         //given
         MtdWaterLeakExamGroup willFinishGroup = groupRepository.findById(51L).get();
         willFinishGroup.updateExamFinishiedDt(LocalDateTime.now().minusDays(1L));
