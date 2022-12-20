@@ -2,6 +2,8 @@ package com.waterleak.utils;
 
 import com.waterleak.dao.reporting.MeterDataSeoulNbiotRepository;
 import com.waterleak.model.reporting.MeterDataSeoulNbiot;
+import java.sql.Time;
+import java.util.Stack;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,19 +21,18 @@ public class WaterLeakChangeVerificationV1 implements WaterLeakChangeVerificatio
   private final MeterDataSeoulNbiotRepository seoulNbiotRepository;
 
   public boolean isCycleChangeVerification(String imei, Long cycle) {
-    List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findTop10ByImeiOrderByMeteringDateDesc(imei);
-    List<Timestamp> meteringDates = seoulNbiots.stream().map(MeterDataSeoulNbiot::getMeteringDate)
-        .collect(Collectors.toList());
+    List<MeterDataSeoulNbiot> seoulNbiots = seoulNbiotRepository.findTop10ByImeiOrderByMeteringDateAsc(imei);
+    Stack<Timestamp> meteringDates = new Stack<>();
+    seoulNbiots.forEach(i -> meteringDates.push(i.getMeteringDate()));
 
-    int checkListSize = seoulNbiots.size();
+    int checkListSize = meteringDates.size();
     List<Boolean> resultList = new ArrayList<>();
     if (checkListSize < CHECK_LIST_SIZE) {
       return false;
     }
 
     for (int i = 0; i < checkListSize - 1; i++) {
-      long diffMin =
-          (meteringDates.get(i).getTime() - meteringDates.get(i + 1).getTime()) / 60000; //분 차이
+      long diffMin = (meteringDates.pop().getTime() - meteringDates.peek().getTime()) / 60000; //분 차이
       resultList.add(cycle == diffMin);
     }
 
